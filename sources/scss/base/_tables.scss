@@ -1,0 +1,85 @@
+table {
+  border-collapse: collapse;
+}
+
+.table {
+  background-color: transparent;
+  width: 100%;
+  max-width: 100%;
+  margin-bottom: 1rem;
+
+  th {
+    text-align: left;
+    border-bottom: $table-border-width * 2 solid;
+
+    @include themefy($themes) {
+      border-color: themed('table-border-color');
+    }
+  }
+
+  th,
+  td {
+    padding: 0.5rem;
+    vertical-align: top;
+  }
+
+  &-bordered {
+    tbody > tr:not(:first-child) {
+      td {
+        border-top: $table-border-width solid;
+
+        @include themefy($themes) {
+          border-color: themed('table-border-color');
+        }
+      }
+    }
+  }
+}
+
+.table-responsive {
+  display: block;
+  width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  -ms-overflow-style: -ms-autohiding-scrollbar;
+
+  &-sm {
+    @media (max-width: 575.98px) {
+      display: block;
+      width: 100%;
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+      -ms-overflow-style: -ms-autohiding-scrollbar;
+    }
+  }
+
+  &-md {
+    @media (max-width: 767.98px) {
+      display: block;
+      width: 100%;
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+      -ms-overflow-style: -ms-autohiding-scrollbar;
+    }
+  }
+
+  &-lg {
+    @media (max-width: 991.98px) {
+      display: block;
+      width: 100%;
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+      -ms-overflow-style: -ms-autohiding-scrollbar;
+    }
+  }
+
+  &-xl {
+    @media (max-width: 1199.98px) {
+      display: block;
+      width: 100%;
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+      -ms-overflow-style: -ms-autohiding-scrollbar;
+    }
+  }
+}

@@ -1,0 +1,61 @@
+// Base
+$base-background-color: #fff;
+$base-font-color: #222;
+
+// Links
+$link-color--default: #004aac;
+$link-color--hover: #cc0000;
+
+// Table
+$table-border-width: 1px;
+$table-border-color: #dedede;
+
+// Accents
+$color-error: #cc0000;
+
+$themes: (
+  light:(
+    base-background-color: #fff,
+    base-font-color: #222,
+    nav-link-color--default: #004aac,
+    nav-link-color--hover: #cc0000,
+    container-background-color: #fff,
+    link-color--default: #004aac,
+    link-color--hover: #cc0000,
+    input-background-color: transparent,
+    input-border-color: #222,
+  ),  
+  dark:(
+    base-background-color: #111,
+    base-font-color: #fff,
+    nav-link-color--default: #4caf50,
+    nav-link-color--hover: #8bc34a,
+    container-background-color: #111,
+    link-color--default: #4caf50,
+    link-color--hover: #8bc34a,
+    input-background-color: transparent,
+    input-border-color: #fff,
+  ),
+  commodore-64: (
+    base-background-color: #7c71da,
+    base-font-color: #7c71d9,
+    nav-link-color--default: #7c71da,
+    nav-link-color--hover: #7c71da,
+    container-background-color: #3e31a2,
+    link-color--default: #00ffff,
+    link-color--hover: #fff,
+    input-background-color: #3e31a2,
+    input-border-color: #fff,
+  ),
+  commodore: (
+    base-background-color: #4400ff,
+    base-font-color: #fff,
+    nav-link-color--default: #fff,
+    nav-link-color--hover: #fff,
+    container-background-color: #0000ff,
+    link-color--default: #00ffff,
+    link-color--hover: #fff,
+    input-background-color: transparent,
+    input-border-color: #fff,
+  )
+);

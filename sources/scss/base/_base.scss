@@ -1,0 +1,41 @@
+*,
+*:after,
+*:before {
+  box-sizing: inherit;
+}
+
+html {
+  font-size: 16px;
+  height: 100%;
+  font-family: monospace;
+  box-sizing: border-box;
+}
+
+body {
+  min-height: 100%;
+  height: auto;
+
+  @include themefy($themes) {
+    background-color: themed('base-background-color');  
+    color: themed('base-font-color');  
+  }
+}
+
+a {
+  @include themefy($themes) {
+    color: themed('link-color--default');  
+  }
+
+  &:hover {
+    @include themefy($themes) {
+      color: themed('link-color--hover');  
+    }
+  }
+}
+
+[type='button'],
+[type='reset'],
+[type='submit'],
+button {
+  cursor: pointer;
+}

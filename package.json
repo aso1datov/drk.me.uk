@@ -1,0 +1,53 @@
+{
+  "name": "drk.me.uk-front",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start:dev": "webpack-dev-server",
+    "build:dev": "webpack --watch",
+    "build:prod": "NODE_ENV=production webpack"
+  },
+  "author": "Alexander Soldatov",
+  "license": "ISC",
+  "browserslist": [
+    "> 3%",
+    "ie > 9"
+  ],
+  "dependencies": {
+    "axios": "^0.18.0",
+    "axios-jsonp": "^1.0.2",
+    "classnames": "^2.2.6",
+    "normalize.css": "^8.0.0",
+    "prop-types": "^15.6.2",
+    "query-string": "^6.1.0",
+    "react": "^16.4.2",
+    "react-dom": "^16.4.2",
+    "react-helmet": "^5.2.0",
+    "react-redux": "^5.0.7",
+    "react-router-dom": "^4.3.1",
+    "redux": "^4.0.0",
+    "redux-thunk": "^2.3.0"
+  },
+  "devDependencies": {
+    "autoprefixer": "^9.1.1",
+    "babel-core": "^6.26.3",
+    "babel-loader": "^7.1.5",
+    "babel-plugin-transform-class-properties": "^6.24.1",
+    "babel-plugin-transform-object-rest-spread": "^6.26.0",
+    "babel-preset-env": "^1.7.0",
+    "babel-preset-react": "^6.24.1",
+    "css-loader": "^1.0.0",
+    "cssnano": "^4.0.5",
+    "extract-text-webpack-plugin": "^4.0.0-beta.0",
+    "history": "^4.7.2",
+    "html-webpack-plugin": "^3.2.0",
+    "node-sass": "^4.9.3",
+    "postcss-loader": "^3.0.0",
+    "sass-loader": "^7.1.0",
+    "style-loader": "^0.22.1",
+    "webpack": "^4.16.5",
+    "webpack-cli": "^3.1.0",
+    "webpack-dev-server": "^3.1.5"
+  }
+}

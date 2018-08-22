@@ -3,19 +3,21 @@ import cn from 'classnames';
 import { string, bool, node, oneOf } from 'prop-types';
 
 const Table = ({ className, bordered, responsive, children }) => {
+  const tableClasses = cn('table', className, { 'table-bordered': bordered });
+  
   if (responsive) {
     const responsiveClass =
       typeof responsive === 'string' ? `table-responsive-${responsive}` : 'table-responsive';
 
     return (
       <div className={responsiveClass}>
-        <table className={cn('table', className, { 'table-bordered': bordered })}>{children}</table>
+        <table className={tableClasses}>{children}</table>
       </div>
     );
   }
 
   return (
-    <table className={cn('table', className, { 'table-bordered': bordered })}>{children}</table>
+    <table className={tableClasses}>{children}</table>
   );
 };
 

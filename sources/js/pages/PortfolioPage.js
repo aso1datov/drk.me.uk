@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { startSetPortfolioList } from '../actions/portfolio';
-import Section from '../components/Section/Section';
-import PortfolioList from '../components/Portfolio/PortfolioList';
+import { startSetPortfolioList } from '@/actions/portfolio';
+import Section from '@/components/Section';
+import PortfolioList from '@/components/Portfolio/PortfolioList';
 
 class PortfolioPage extends Component {
   componentDidMount() {
@@ -29,5 +29,5 @@ const mapDispatchToProps = dispatch => ({
 
 export default connect(
   mapStateToProps,
-  mapDispatchToProps,
+  mapDispatchToProps
 )(PortfolioPage);

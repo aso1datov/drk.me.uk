@@ -1,6 +1,6 @@
 import React from 'react';
-import Section from '../../components/Section/Section';
-import LoremIpsum from '../../components/LoremIpsum/LoremIpsum';
+import Section from '@/components/Section';
+import LoremIpsum from '@/components/LoremIpsum/LoremIpsum';
 
 const LoremIpsumPage = () => (
   <Section title="lorem ipsum generator (ivc edition)" goBackTo="/services">

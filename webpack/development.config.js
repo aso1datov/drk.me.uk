@@ -11,6 +11,12 @@ module.exports = () => {
       path: resolve(__dirname, '..', 'public', 'dist'),
       filename: 'bundle.js',
     },
+    resolve: {
+      extensions: ['.js'],
+      alias: {
+        '@': resolve(__dirname, '..', 'sources', 'js'),
+      },
+    },
     module: {
       rules: [
         {
@@ -28,8 +34,9 @@ module.exports = () => {
               {
                 loader: 'css-loader',
                 options: {
-                  sourceMap: true,
                   url: false,
+                  sourceMap: true,
+                  importLoaders: 2,
                 },
               },
               {

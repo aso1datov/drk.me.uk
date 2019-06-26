@@ -1,20 +1,20 @@
 import React from 'react';
 import { Router, Switch } from 'react-router-dom';
-import createBrowserHistory from 'history/createBrowserHistory';
+import { createBrowserHistory } from 'history';
 
 import PrivateRoute from './PrivateRoute';
 import PublicRoute from './PublicRoute';
 
-import Navbar from '../components/Navbar/Navbar';
+import Navbar from '@/components/Navbar/Navbar';
 
-import Layout from '../components/Layout/Layout';
-import HomePage from '../pages/HomePage';
-import PortfolioPage from '../pages/PortfolioPage';
-import AboutPage from '../pages/AboutPage';
-import ServicesPage from '../pages/ServicesPage';
-import LoremIpsumPage from '../pages/services/LoremIpsumPage';
-import VKLikesRemoverPage from '../pages/services/VKLikesRemoverPage';
-import Header from '../components/Header/Header';
+import Layout from '@/components/Layout/Layout';
+import HomePage from '@/pages/HomePage';
+import PortfolioPage from '@/pages/PortfolioPage';
+import AboutPage from '@/pages/AboutPage';
+import ServicesPage from '@/pages/ServicesPage';
+import LoremIpsumPage from '@/pages/services/LoremIpsumPage';
+import VKLikesRemoverPage from '@/pages/services/VKLikesRemoverPage';
+import Header from '@/components/Header/Header';
 
 const history = createBrowserHistory();
 

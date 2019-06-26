@@ -1,22 +1,20 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import Section from '../components/Section/Section';
+import Section from '@/components/Section';
 
-const ServicesPage = () => {
-  return (
-    <Section title="Services">
-      <h2>Services</h2>
+const ServicesPage = () => (
+  <Section title="Services">
+    <h2>Services</h2>
 
-      <ul>
-        <li>
-          <Link to="/services/vk-likes-remover">VK likes remover</Link>
-        </li>
-        <li>
-          <Link to="/services/lorem-ipsum">lorem ipsum generator (ivc edition)</Link>
-        </li>
-      </ul>
-    </Section>
-  );
-};
+    <ul>
+      <li>
+        <Link to="/services/vk-likes-remover">VK likes remover</Link>
+      </li>
+      <li>
+        <Link to="/services/lorem-ipsum">lorem ipsum generator (ivc edition)</Link>
+      </li>
+    </ul>
+  </Section>
+);
 
 export default ServicesPage;

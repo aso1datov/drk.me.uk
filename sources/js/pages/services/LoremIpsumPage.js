@@ -1,6 +1,19 @@
+/**
+ * Vendor
+ */
+
 import React from 'react';
+
+/**
+ * Components
+ */
+
 import Section from '@/components/Section';
-import LoremIpsum from '@/components/LoremIpsum/LoremIpsum';
+import LoremIpsum from '@/components/LoremIpsum';
+
+/**
+ * Expo
+ */
 
 const LoremIpsumPage = () => (
   <Section title="lorem ipsum generator (ivc edition)" goBackTo="/services">

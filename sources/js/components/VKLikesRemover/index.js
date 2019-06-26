@@ -1,6 +1,24 @@
+/**
+ * Vendor
+ */
+
 import React, { Component, Fragment } from 'react';
-import VK from '../../services/VK';
+
+/**
+ * Components
+ */
+
 import LikesList from './LikesList';
+
+/**
+ * Services
+ */
+
+import VK from '@/services/VK';
+
+/**
+ * Expo
+ */
 
 const vk = new VK({ appId: 6645397 });
 
@@ -46,7 +64,7 @@ class VKLikesRemover extends Component {
       }),
       () => {
         vk.setToken(this.state.token.trim());
-      },
+      }
     );
   };
 
@@ -73,7 +91,7 @@ class VKLikesRemover extends Component {
       }),
       () => {
         this.getLikes();
-      },
+      }
     );
   };
 
@@ -90,7 +108,7 @@ class VKLikesRemover extends Component {
       }),
       () => {
         console.log(123);
-      },
+      }
     );
   };
 
@@ -200,7 +218,7 @@ class VKLikesRemover extends Component {
           count: prevState.likes.count - 1,
         },
       }),
-      cb,
+      cb
     );
   };
 
@@ -290,7 +308,7 @@ class VKLikesRemover extends Component {
       }),
       () => {
         this.getLikes();
-      },
+      }
     );
   };
 

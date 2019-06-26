@@ -1,6 +1,19 @@
+/**
+ * Vendor
+ */
+
 import React from 'react';
+
+/**
+ * Components
+ */
+
 import Section from '@/components/Section';
-import VKLikesRemover from '@/components/VKLikesRemover/VKLikesRemover';
+import VKLikesRemover from '@/components/VKLikesRemover';
+
+/**
+ * Expo
+ */
 
 const VKLikesRemoverPage = () => (
   <Section title="VK likes remover" goBackTo="/services">

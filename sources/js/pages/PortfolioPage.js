@@ -1,8 +1,26 @@
+/**
+ * Vendor
+ */
+
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { startSetPortfolioList } from '@/actions/portfolio';
+
+/**
+ * Components
+ */
+
 import Section from '@/components/Section';
 import PortfolioList from '@/components/Portfolio/PortfolioList';
+
+/**
+ * Actions
+ */
+
+import { startSetPortfolioList } from '@/actions/portfolio';
+
+/**
+ * Expo
+ */
 
 class PortfolioPage extends Component {
   componentDidMount() {

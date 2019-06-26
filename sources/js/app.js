@@ -1,22 +1,38 @@
+/**
+ * Vendor
+ */
+
 import React from 'react';
 import { render } from 'react-dom';
 import { Provider } from 'react-redux';
 
-import configureStore from './store/configureStore';
-import AppRouter from './routes/AppRouter';
+/**
+ * Store
+ */
 
-import { user } from './services/ApiService';
+import configureStore from '@/store/configureStore';
+
+/**
+ * Router
+ */
+
+import AppRouter from '@/routes/AppRouter';
+
+/**
+ * Services
+ */
+
+import { user } from '@/services/ApiService';
+
+/**
+ * Styles
+ */
 
 import '../scss/styles.scss';
 
-const credentials = {
-  email: 'admin@drk.me.uk',
-  password: '12345',
-};
-
-// ApiService.post('/auth', { credentials });
-
-// user.auth({ credentials });
+/**
+ * Expo
+ */
 
 const store = configureStore();
 

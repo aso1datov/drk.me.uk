@@ -1,6 +1,19 @@
+/**
+ * Vendor
+ */
+
 import React from 'react';
 import { array } from 'prop-types';
+
+/**
+ * Components
+ */
+
 import PortfolioListItem from './PortfolioListItem';
+
+/**
+ * Expo
+ */
 
 const PortfolioList = ({ portfolios }) => (
   <ol className="portfolio-list">

@@ -1,15 +1,17 @@
+/**
+ * Vendor
+ */
+
 import React from 'react';
 import { connect } from 'react-redux';
-import { Route, Redirect } from 'react-router-dom';
+import { Route } from 'react-router-dom';
 
-export const PublicRoute = ({
-  isAuthenticated,
-  component: Component,
-  ...rest
-}) => <Route {...rest} component={Component} />;
+/**
+ * Expo
+ */
 
-const mapStateToProps = state => ({
-  isAuthenticated: state.user.isAuthenticated,
-});
+export const PublicRoute = ({ component: Component, ...rest }) => (
+  <Route {...rest} component={Component} />
+);
 
-export default connect(mapStateToProps)(PublicRoute);
+export default PublicRoute;

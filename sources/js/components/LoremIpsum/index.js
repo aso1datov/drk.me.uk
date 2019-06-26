@@ -1,7 +1,30 @@
+/**
+ * Vendor
+ */
+
 import React, { Component } from 'react';
-import { phrases } from './phrases';
-import { shuffle } from '../../utils';
+
+/**
+ * Components
+ */
+
 import PhrasesList from './PhrasesList';
+
+/**
+ * Phrases
+ */
+
+import { phrases } from './phrases';
+
+/**
+ * Utils
+ */
+
+import { shuffle } from '@/utils';
+
+/**
+ * Expo
+ */
 
 class LoremIpsum extends Component {
   state = {

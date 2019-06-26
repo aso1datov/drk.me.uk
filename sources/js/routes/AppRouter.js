@@ -1,22 +1,46 @@
+/**
+ * Vendor
+ */
+
 import React from 'react';
 import { Router, Switch } from 'react-router-dom';
 import { createBrowserHistory } from 'history';
 
+/**
+ * Routes
+ */
+
 import PrivateRoute from './PrivateRoute';
 import PublicRoute from './PublicRoute';
 
-import Navbar from '@/components/Navbar/Navbar';
+/**
+ * Components
+ */
 
-import Layout from '@/components/Layout/Layout';
+import Navbar from '@/components/Navbar';
+import Layout from '@/components/Layout';
+import Header from '@/components/Header';
+
+/**
+ * Pages
+ */
+
 import HomePage from '@/pages/HomePage';
 import PortfolioPage from '@/pages/PortfolioPage';
 import AboutPage from '@/pages/AboutPage';
 import ServicesPage from '@/pages/ServicesPage';
 import LoremIpsumPage from '@/pages/services/LoremIpsumPage';
 import VKLikesRemoverPage from '@/pages/services/VKLikesRemoverPage';
-import Header from '@/components/Header/Header';
+
+/**
+ * History
+ */
 
 const history = createBrowserHistory();
+
+/**
+ * Expo
+ */
 
 const AppRouter = () => (
   <Router history={history}>

@@ -1,4 +1,5 @@
 const { resolve } = require('path');
+const Dotenv = require('dotenv-webpack');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 module.exports = () => {
@@ -55,7 +56,7 @@ module.exports = () => {
         },
       ],
     },
-    plugins: [CSSExtract],
+    plugins: [CSSExtract, new Dotenv()],
     devtool: 'inline-source-map',
     devServer: {
       contentBase: resolve(__dirname, '..', 'public'),

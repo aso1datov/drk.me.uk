@@ -1,6 +1,19 @@
+/**
+ * Vendor
+ */
+
 import React from 'react';
 import { Link } from 'react-router-dom';
+
+/**
+ * Components
+ */
+
 import Section from '@/components/Section';
+
+/**
+ * Expo
+ */
 
 const ServicesPage = () => (
   <Section title="Services">

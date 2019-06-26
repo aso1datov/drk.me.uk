@@ -1,5 +1,18 @@
+/**
+ * Vendor
+ */
+
 import React from 'react';
-import Section from '../components/Section';
+
+/**
+ * Components
+ */
+
+import Section from '@/components/Section';
+
+/**
+ * Expo
+ */
 
 const AboutPage = () => (
   <Section title="About">

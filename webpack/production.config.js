@@ -1,4 +1,5 @@
 const { resolve } = require('path');
+const Dotenv = require('dotenv-webpack');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
@@ -8,10 +9,10 @@ module.exports = () => {
   const CSSExtract = new ExtractTextPlugin({ filename: 'css/styles.css' });
 
   const HTMLGenerator = new HtmlWebpackPlugin({
-      filename: 'index.html',
-      title: 'drk.me.uk',
-      template: './sources/index.tpl.html',
-      hash: true,
+    filename: 'index.html',
+    title: 'drk.me.uk',
+    template: './sources/index.tpl.html',
+    hash: true,
   });
 
   return {
@@ -21,6 +22,12 @@ module.exports = () => {
       publicPath: '/',
       path: STATIC_PATH,
       filename: 'js/bundle.js',
+    },
+    resolve: {
+      extensions: ['.js'],
+      alias: {
+        '@': resolve(__dirname, '..', 'sources', 'js'),
+      },
     },
     module: {
       rules: [
@@ -41,6 +48,7 @@ module.exports = () => {
                 options: {
                   sourceMap: true,
                   url: false,
+                  importLoaders: 2,
                 },
               },
               {
@@ -61,7 +69,7 @@ module.exports = () => {
         },
       ],
     },
-    plugins: [CSSExtract, HTMLGenerator],
+    plugins: [CSSExtract, HTMLGenerator, new Dotenv()],
     devtool: 'source-map',
   };
 };

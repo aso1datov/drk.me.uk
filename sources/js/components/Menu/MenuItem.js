@@ -1,6 +1,14 @@
+/**
+ * Vendor
+ */
+
 import React from 'react';
 import { NavLink } from 'react-router-dom';
 import { string } from 'prop-types';
+
+/**
+ * Expo
+ */
 
 const MenuItem = ({ to, title, exact }) => (
   <li className="navigation-item">

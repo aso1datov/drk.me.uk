@@ -1,8 +1,21 @@
-import { portfolioConstants } from '../constants/portfolio';
+/**
+ * Constants
+ */
+
+import { portfolioConstants } from '@/constants/portfolio';
+
+/**
+ * Initial state
+ */
+
 const initialState = {
   items: [],
   count: 0,
 };
+
+/**
+ * Expo
+ */
 
 export default (state = initialState, action = {}) => {
   switch (action.type) {

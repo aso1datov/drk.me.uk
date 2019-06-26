@@ -1,10 +1,10 @@
 {
   "compilerOptions": {
-    "allowSyntheticDefaultImports": true,
+    "target": "es2017",
     "baseUrl": "./",
     "paths": {
       "@/*": ["./sources/js/*"]
     }
   },
-  "exclude": ["node_modules", "build"]
+  "exclude": ["node_modules", "build", "public"]
 }

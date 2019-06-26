@@ -1,5 +1,18 @@
+/**
+ * Vendor
+ */
+
 import React from 'react';
-import Navigation from '../Navigation/Navigation';
+
+/**
+ * Components
+ */
+
+import Navigation from '@/components/Navigation';
+
+/**
+ * Expo
+ */
 
 const Navbar = () => (
   <div className="navbar">

@@ -1,5 +1,18 @@
+/**
+ * Vendor
+ */
+
 import React from 'react';
-import Container from '../Container/Container';
+
+/**
+ * Components
+ */
+
+import Container from '@/components/Container';
+
+/**
+ * Expo
+ */
 
 const Layout = ({ children }) => (
   <div className="layout">

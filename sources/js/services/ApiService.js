@@ -1,7 +1,15 @@
+/**
+ * Vendor
+ */
+
 import axios from 'axios';
 
+/**
+ * Expo
+ */
+
 const req = axios.create({
-  baseURL: 'http://api.drk.me.uk/',
+  baseURL: `${process.env.API_BASE_URL}`,
 });
 
 export const user = {

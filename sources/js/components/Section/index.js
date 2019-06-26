@@ -1,8 +1,16 @@
+/**
+ * Vendor
+ */
+
 import React from 'react';
 import cn from 'classnames';
 import { Helmet } from 'react-helmet';
 import { Link } from 'react-router-dom';
 import { string, node } from 'prop-types';
+
+/**
+ * Expo
+ */
 
 const Section = ({ title, className, goBackTo, children }) => {
   return (

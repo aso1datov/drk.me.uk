@@ -1,7 +1,20 @@
+/**
+ * Vendor
+ */
+
 import React from 'react';
 import { array, func } from 'prop-types';
-import Table from '../Table/Table';
+
+/**
+ * Components
+ */
+
+import Table from '@/components/Table';
 import LinkItem from './LinkItem';
+
+/**
+ * Expo
+ */
 
 const Links = ({ links, onRemove }) => (
   <Table responsive="md" bordered>

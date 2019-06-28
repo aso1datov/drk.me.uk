@@ -1,6 +1,6 @@
 import React from 'react';
 import { array, func } from 'prop-types';
-import Table from '../Table/Table';
+import Table from '@/components/Table';
 import PostItem from './PostItem';
 
 const Posts = ({ posts, onRemove }) => (
@@ -15,7 +15,11 @@ const Posts = ({ posts, onRemove }) => (
     {posts.length > 0 && (
       <tbody>
         {posts.map(post => (
-          <PostItem key={`${post.id}${post.owner_id}`} {...post} onRemove={onRemove} />
+          <PostItem
+            key={`${post.id}${post.owner_id}`}
+            {...post}
+            onRemove={onRemove}
+          />
         ))}
       </tbody>
     )}

@@ -1,4 +1,12 @@
+/**
+ * Vendor
+ */
+
 import React from 'react';
+
+/**
+ * Expo
+ */
 
 const LinkItem = ({ title, url, onRemove }) => (
   <tr>
@@ -8,7 +16,7 @@ const LinkItem = ({ title, url, onRemove }) => (
       </a>
     </td>
     <td className="text-right">
-      <button type="button" onClick={() => onRemove(id)}>
+      <button type="button" onClick={onRemove.bind(null, id)}>
         Remove
       </button>
     </td>

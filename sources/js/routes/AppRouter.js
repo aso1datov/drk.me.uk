@@ -31,6 +31,7 @@ import AboutPage from '@/pages/AboutPage';
 import ServicesPage from '@/pages/ServicesPage';
 import LoremIpsumPage from '@/pages/services/LoremIpsumPage';
 import VKLikesRemoverPage from '@/pages/services/VKLikesRemoverPage';
+import CanteenSelectorPage from '@/pages/services/CanteenSelectorPage';
 
 /**
  * History
@@ -53,8 +54,21 @@ const AppRouter = () => (
         <PublicRoute path="/portfolio/:id" component={PortfolioPage} exact />
         <PublicRoute path="/about" component={AboutPage} exact />
         <PublicRoute path="/services" component={ServicesPage} exact />
-        <PublicRoute path="/services/vk-likes-remover" component={VKLikesRemoverPage} exact />
-        <PublicRoute path="/services/lorem-ipsum" component={LoremIpsumPage} exact />
+        <PublicRoute
+          path="/services/vk-likes-remover"
+          component={VKLikesRemoverPage}
+          exact
+        />
+        <PublicRoute
+          path="/services/lorem-ipsum"
+          component={LoremIpsumPage}
+          exact
+        />
+        <PublicRoute
+          path="/services/canteen-selector"
+          component={CanteenSelectorPage}
+          exact
+        />
       </Switch>
     </Layout>
   </Router>

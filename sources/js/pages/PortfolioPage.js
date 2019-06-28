@@ -28,6 +28,7 @@ class PortfolioPage extends Component {
   }
   render() {
     const { portfolios, startSetPortfolioList } = this.props;
+
     return (
       <Section title="Portfolio">
         <h2>Portfolio</h2>

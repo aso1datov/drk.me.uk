@@ -24,7 +24,12 @@ const ServicesPage = () => (
         <Link to="/services/vk-likes-remover">VK likes remover</Link>
       </li>
       <li>
-        <Link to="/services/lorem-ipsum">lorem ipsum generator (ivc edition)</Link>
+        <Link to="/services/canteen-selector">Canteen selector</Link>
+      </li>
+      <li>
+        <Link to="/services/lorem-ipsum">
+          lorem ipsum generator (ivc edition)
+        </Link>
       </li>
     </ul>
   </Section>

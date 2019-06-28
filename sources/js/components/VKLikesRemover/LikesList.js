@@ -1,10 +1,22 @@
+/**
+ * Vendor
+ */
+
 import React from 'react';
 import { string, array, func } from 'prop-types';
+
+/**
+ * Components
+ */
 
 import Posts from './Posts';
 import Photos from './Photos';
 import Links from './Links';
 import Videos from './Videos';
+
+/**
+ * Expo
+ */
 
 const LikesList = ({ type, likes, onRemove }) => {
   switch (type) {

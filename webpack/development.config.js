@@ -1,16 +1,28 @@
 const { resolve } = require('path');
 const Dotenv = require('dotenv-webpack');
-const ExtractTextPlugin = require('extract-text-webpack-plugin');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 module.exports = () => {
-  const CSSExtract = new ExtractTextPlugin('styles.css');
+  const HTMLGenerator = new HtmlWebpackPlugin({
+    filename: 'index.html',
+    title: 'drk.me.uk',
+    template: './sources/index.tpl.html',
+    hash: false,
+  });
+
+  const CSSExtract = new MiniCssExtractPlugin({
+    filename: '[name].[hash:8].css',
+    chunkFilename: '[name].[hash:8].css',
+  });
 
   return {
     mode: 'development',
     entry: './sources/js/app.js',
     output: {
       path: resolve(__dirname, '..', 'public', 'dist'),
-      filename: 'bundle.js',
+      filename: '[name].[hash:8].js',
+      chunkFilename: '[name].[hash:8].js',
     },
     resolve: {
       extensions: ['.js'],
@@ -29,39 +41,39 @@ module.exports = () => {
         },
         {
           test: /\.s?css$/,
-          use: CSSExtract.extract({
-            fallback: 'style-loader',
-            use: [
-              {
-                loader: 'css-loader',
-                options: {
-                  url: false,
-                  sourceMap: true,
-                  importLoaders: 2,
-                },
+          use: [
+            MiniCssExtractPlugin.loader,
+            {
+              loader: 'css-loader',
+              options: {
+                sourceMap: true,
+                url: false,
+                importLoaders: 2,
               },
-              {
-                loader: 'postcss-loader',
-                options: { sourceMap: true },
+            },
+            {
+              loader: 'postcss-loader',
+              options: {
+                sourceMap: true,
               },
-              {
-                loader: 'sass-loader',
-                options: {
-                  sourceMap: true,
-                  data: '$env: dev;',
-                },
+            },
+            {
+              loader: 'sass-loader',
+              options: {
+                sourcecMap: true,
+                data: '$env: dev;',
               },
-            ],
-          }),
+            },
+          ],
         },
       ],
     },
-    plugins: [CSSExtract, new Dotenv()],
+    plugins: [HTMLGenerator, CSSExtract, new Dotenv()],
     devtool: 'inline-source-map',
     devServer: {
       contentBase: resolve(__dirname, '..', 'public'),
       historyApiFallback: true,
-      publicPath: '/dist/',
+      publicPath: '/',
       port: 9000,
     },
   };

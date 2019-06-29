@@ -39,19 +39,18 @@ class VK {
    *
    * @param {string} method VK API method
    * @param {Object} [payload={}] Request payload
-   * @returns {Promise}
+   * @returns {Promise<any>}
    */
 
-  sendRequest(method, payload = {}) {
+  async sendRequest(method, payload = {}) {
     const { TOKEN: access_token, API_VERSION: v } = this;
 
     const params = Object.assign({}, payload, { access_token, v });
+    const { data } = await this.$http.get(`/${method}`, {
+      params: { ...params },
+    });
 
-    return this.$http
-      .get(`/${method}`, {
-        params: { ...params },
-      })
-      .then(response => response.data);
+    return data;
   }
 
   /**
@@ -69,8 +68,10 @@ class VK {
       v: this.API_VERSION,
     };
 
-    const url = `https://oauth.vk.com/authorize?${stringify(params)}`;
-    window.open(url, '_blank');
+    window.open(
+      `https://oauth.vk.com/authorize?${stringify(params)}`,
+      '_blank'
+    );
   }
 }
 

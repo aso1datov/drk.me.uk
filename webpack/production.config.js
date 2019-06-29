@@ -1,27 +1,32 @@
 const { resolve } = require('path');
 const Dotenv = require('dotenv-webpack');
-const ExtractTextPlugin = require('extract-text-webpack-plugin');
+const TerserPlugin = require('terser-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 const STATIC_PATH = resolve(__dirname, '..', 'build');
 
 module.exports = () => {
-  const CSSExtract = new ExtractTextPlugin({ filename: 'css/styles.css' });
-
   const HTMLGenerator = new HtmlWebpackPlugin({
     filename: 'index.html',
     title: 'drk.me.uk',
     template: './sources/index.tpl.html',
-    hash: true,
+    hash: false,
+  });
+
+  const CSSExtract = new MiniCssExtractPlugin({
+    filename: '[name].[hash:8].css',
+    chunkFilename: '[name].[hash:8].css',
   });
 
   return {
     mode: 'production',
     entry: './sources/js/app.js',
     output: {
+      filename: '[name].[hash:8].js',
+      chunkFilename: '[name].[hash:8].js',
       publicPath: '/',
       path: STATIC_PATH,
-      filename: 'js/bundle.js',
     },
     resolve: {
       extensions: ['.js'],
@@ -40,36 +45,41 @@ module.exports = () => {
         },
         {
           test: /\.s?css$/,
-          use: CSSExtract.extract({
-            fallback: 'style-loader',
-            use: [
-              {
-                loader: 'css-loader',
-                options: {
-                  sourceMap: true,
-                  url: false,
-                  importLoaders: 2,
-                },
+          use: [
+            MiniCssExtractPlugin.loader,
+            {
+              loader: 'css-loader',
+              options: {
+                sourceMap: false,
+                url: false,
+                importLoaders: 2,
               },
-              {
-                loader: 'postcss-loader',
-                options: {
-                  sourceMap: true,
-                },
+            },
+            {
+              loader: 'postcss-loader',
+              options: {
+                sourceMap: false,
               },
-              {
-                loader: 'sass-loader',
-                options: {
-                  sourceMap: true,
-                  data: '$env: prod;',
-                },
+            },
+            {
+              loader: 'sass-loader',
+              options: {
+                data: '$env: prod;',
               },
-            ],
-          }),
+            },
+          ],
         },
       ],
     },
-    plugins: [CSSExtract, HTMLGenerator, new Dotenv()],
-    devtool: 'source-map',
+    plugins: [HTMLGenerator, CSSExtract, new Dotenv()],
+    devtool: false,
+    optimization: {
+      minimizer: [
+        new TerserPlugin({
+          cache: true,
+          parallel: true,
+        }),
+      ],
+    },
   };
 };

@@ -21,6 +21,7 @@ module.exports = () => {
     entry: './sources/js/app.js',
     output: {
       path: resolve(__dirname, '..', 'public', 'dist'),
+      publicPath: '/',
       filename: '[name].[hash:8].js',
       chunkFilename: '[name].[hash:8].js',
     },
@@ -73,7 +74,6 @@ module.exports = () => {
     devServer: {
       contentBase: resolve(__dirname, '..', 'public'),
       historyApiFallback: true,
-      publicPath: '/',
       port: 9000,
     },
   };

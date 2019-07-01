@@ -74,6 +74,16 @@ module.exports = () => {
     plugins: [HTMLGenerator, CSSExtract, new Dotenv()],
     devtool: false,
     optimization: {
+      splitChunks: {
+        cacheGroups: {
+          commons: {
+            test: /[\\/]node_modules[\\/]/,
+            name: 'vendors',
+            chunks: 'all',
+            reuseExistingChunk: true,
+          },
+        },
+      },
       minimizer: [
         new TerserPlugin({
           cache: true,

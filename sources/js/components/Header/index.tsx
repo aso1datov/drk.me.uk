@@ -1,6 +1,6 @@
 import React from 'react';
 
-const Header = () => (
+const Header: React.FC = () => (
   <header className="site-header">
     <h1>**** DRK ****</h1>
   </header>

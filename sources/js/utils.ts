@@ -1,8 +1,9 @@
 /**
  * Shuffles array in place.
+ *
  * @param {Array} a items An array containing the items.
  */
-export function shuffle(a) {
+export function shuffle(a: Array<any>) {
   for (let i = a.length - 1; i > 0; i--) {
     const j = Math.floor(Math.random() * (i + 1));
     [a[i], a[j]] = [a[j], a[i]];
@@ -19,7 +20,7 @@ export function shuffle(a) {
  *
  * @returns {number} Random integer
  */
-export const getRandomInt = (min, max) => {
+export const getRandomInt = (min: number, max: number): number => {
   let rand = min - 0.5 + Math.random() * (max - min + 1);
   rand = Math.round(rand);
   return rand;
@@ -31,7 +32,8 @@ export const getRandomInt = (min, max) => {
  * @param {number} radians
  * @returns {number} degrees
  */
-export const radiansToDegrees = radians => (radians * 180) / Math.PI;
+export const radiansToDegrees = (radians: number): number =>
+  (radians * 180) / Math.PI;
 
 /**
  * Converts from degrees to radians.
@@ -39,14 +41,15 @@ export const radiansToDegrees = radians => (radians * 180) / Math.PI;
  * @param {number} degrees
  * @returns {number} radians
  */
-export const degreesToRadians = degrees => (degrees * Math.PI) / 180;
+export const degreesToRadians = (degrees: number): number =>
+  (degrees * Math.PI) / 180;
 
 /**
  * Get arithmetic mean
  *
  * @returns {number} arithmetic mean
  */
-export const getArithmeticMean = function() {
+export const getArithmeticMean = function(...args: number[]): number {
   let sum = 0;
 
   for (let i = 0; i < arguments[i]; i++) {
@@ -63,4 +66,5 @@ export const getArithmeticMean = function() {
  * @returns {Promise<void>}
  */
 
-export const delay = ms => new Promise(resolve => setTimeout(resolve, ms));
+export const delay = (ms: number): Promise<void> =>
+  new Promise(resolve => setTimeout(resolve, ms));

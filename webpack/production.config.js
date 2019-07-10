@@ -21,7 +21,7 @@ module.exports = () => {
 
   return {
     mode: 'production',
-    entry: './sources/js/app.js',
+    entry: './sources/js/index.tsx',
     output: {
       filename: '[name].[hash:8].js',
       chunkFilename: '[name].[hash:8].js',
@@ -29,7 +29,7 @@ module.exports = () => {
       path: STATIC_PATH,
     },
     resolve: {
-      extensions: ['.js'],
+      extensions: ['.tsx', '.ts', '.js'],
       alias: {
         '@': resolve(__dirname, '..', 'sources', 'js'),
       },
@@ -42,6 +42,15 @@ module.exports = () => {
           use: {
             loader: 'babel-loader',
           },
+        },
+        {
+          test: /\.ts(x?)$/,
+          exclude: /node_modules/,
+          use: [
+            {
+              loader: 'ts-loader',
+            },
+          ],
         },
         {
           test: /\.s?css$/,

@@ -36,7 +36,7 @@ import '../scss/styles.scss';
 
 const store = configureStore();
 
-const App = () => (
+const App: React.FC = () => (
   <Provider store={store}>
     <AppRouter />
   </Provider>

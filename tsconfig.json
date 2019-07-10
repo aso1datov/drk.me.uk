@@ -1,0 +1,18 @@
+{
+  "compilerOptions": {
+    "outDir": "./build",
+    "noImplicitAny": true,
+    "sourceMap": true,
+    "allowJs": true,
+    "target": "es5",
+    "module": "es6",
+    "moduleResolution": "node",
+    "jsx": "react",
+    "baseUrl": "./",
+    "paths": {
+      "@/*": ["sources/js/*"]
+    },
+    "allowSyntheticDefaultImports": true
+  },
+  "include": ["./sources/js/*"]
+}

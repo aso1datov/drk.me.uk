@@ -4,7 +4,6 @@
 
 import React, { PureComponent, createRef } from 'react';
 import cn from 'classnames';
-import { number, array, object } from 'prop-types';
 
 /**
  * Components
@@ -13,20 +12,33 @@ import { number, array, object } from 'prop-types';
 import CanteenList from './CanteenList';
 
 /**
+ * Typings
+ */
+
+import {
+  ICanteenSelector,
+  ICanteenSelectorState,
+  IChartCoords,
+  ICustomVariables,
+} from './interfaces';
+
+type ICanteenSelectorProps = ICanteenSelector;
+
+/**
  * Utils
  */
 
 import { getRandomInt, radiansToDegrees } from '@/utils';
 
-class CanteenSelector extends PureComponent {
-  static propTypes = {
-    colors: array.isRequired,
-    data: object.isRequired,
-    width: number,
-    height: number,
-    doughnutHoleSize: number,
-    rotateDuration: number,
-  };
+class CanteenSelector extends PureComponent<
+  ICanteenSelector,
+  ICanteenSelectorState
+> {
+  public $canvasRef: React.RefObject<HTMLCanvasElement>;
+  public chart: HTMLCanvasElement;
+  public ctx: CanvasRenderingContext2D;
+  public slices: Array<{ [x: string]: number[] }>;
+  public timer: number;
 
   static defaultProps = {
     data: {},
@@ -36,10 +48,10 @@ class CanteenSelector extends PureComponent {
     rotateDuration: 2500,
   };
 
-  constructor(props) {
+  constructor(props: ICanteenSelectorProps) {
     super(props);
 
-    this.$canvasRef = createRef();
+    this.$canvasRef = createRef<HTMLCanvasElement>();
     this.chart = null;
     this.ctx = null;
     this.slices = [];
@@ -77,7 +89,7 @@ class CanteenSelector extends PureComponent {
    *
    * @return {number} Total
    */
-  get total() {
+  get total(): number {
     return Object.values(this.props.data).reduce(
       (total, value) => total + value,
       0
@@ -89,7 +101,7 @@ class CanteenSelector extends PureComponent {
    *
    * @return {object} { centerX, centerY, radius }
    */
-  get coords() {
+  get coords(): IChartCoords {
     return {
       centerX: this.chart.width / 2,
       centerY: this.chart.height / 2,
@@ -105,7 +117,7 @@ class CanteenSelector extends PureComponent {
    * @param {number} endX - the X coordinate of the line end point
    * @param {number} endY - the Y coordinate of the line end point
    */
-  drawLine = (startX, startY, endX, endY) => {
+  drawLine = (startX: number, startY: number, endX: number, endY: number) => {
     this.ctx.beginPath();
     this.ctx.moveTo(startX, startY);
     this.ctx.lineTo(endX, endY);
@@ -121,7 +133,13 @@ class CanteenSelector extends PureComponent {
    * @param {number} startAngle - the start angle in radians where the portion of the circle starts
    * @param {number} endAngle - the end angle in radians where the portion of circle ends
    */
-  drawArc = (centerX, centerY, radius, startAngle, endAngle) => {
+  drawArc = (
+    centerX: number,
+    centerY: number,
+    radius: number,
+    startAngle: number,
+    endAngle: number
+  ) => {
     this.ctx.beginPath();
     this.ctx.arc(centerX, centerY, radius, startAngle, endAngle);
     this.ctx.stroke();
@@ -137,7 +155,14 @@ class CanteenSelector extends PureComponent {
    * @param {number} endAngle - the end angle in radians where the portion of circle ends
    * @param {string} color - the color used to fill slice
    */
-  drawPieSlice = (centerX, centerY, radius, startAngle, endAngle, color) => {
+  drawPieSlice = (
+    centerX: number,
+    centerY: number,
+    radius: number,
+    startAngle: number,
+    endAngle: number,
+    color: string
+  ) => {
     this.ctx.fillStyle = color;
     this.ctx.beginPath();
     this.ctx.moveTo(centerX, centerY);
@@ -151,14 +176,14 @@ class CanteenSelector extends PureComponent {
    *
    * @param {number} degrees Rotate angle in degrees
    */
-  rotateCanvas = degrees => {
+  rotateCanvas = (degrees: number) => {
     this.setState(
       prevState => ({
         rotate: true,
         degrees: prevState.degrees + degrees,
       }),
       () => {
-        this.getWinner(degrees);
+        this.getWinner();
       }
     );
   };
@@ -224,12 +249,12 @@ class CanteenSelector extends PureComponent {
 
     clearTimeout(this.timer);
 
-    this.timer = setTimeout(() => {
+    this.timer = window.setTimeout(() => {
       this.setState(() => ({ selected: this.findCanteen(point) }));
     }, this.props.rotateDuration);
   };
 
-  findCanteen = point =>
+  findCanteen = (point: number) =>
     this.slices.reduce((acc, slice) => {
       const canteen = Object.keys(slice)[0];
       const [start, end] = slice[canteen];
@@ -240,16 +265,17 @@ class CanteenSelector extends PureComponent {
   render() {
     const { data, colors, rotateDuration } = this.props;
     const { rotate, degrees, selected } = this.state;
+    const style: ICustomVariables = {
+      '--rotation': `${degrees}deg`,
+      '--rotate-duration': `${rotateDuration}ms`,
+    };
 
     return (
       <div className="canteen-selector">
         <div className="canteen-selector-wrapper">
           <canvas
             className={cn('canteens-chart', { rotate })}
-            style={{
-              '--rotation': `${degrees}deg`,
-              '--rotate-duration': `${rotateDuration}ms`,
-            }}
+            style={style}
             ref={this.$canvasRef}
           />
           <button

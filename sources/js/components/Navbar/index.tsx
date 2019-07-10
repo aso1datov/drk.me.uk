@@ -14,7 +14,7 @@ import Navigation from '@/components/Navigation';
  * Expo
  */
 
-const Navbar = () => (
+const Navbar: React.FC = () => (
   <div className="navbar">
     <Navigation />
   </div>

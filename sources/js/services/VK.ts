@@ -2,16 +2,29 @@
  * Vendor
  */
 
-import axios from 'axios';
+import axios, { AxiosInstance } from 'axios';
 import { stringify } from 'query-string';
 import jsonpAdapter from 'axios-jsonp';
+
+/**
+ * Interfaces
+ */
+
+import { IVK, IVKParams } from './interfaces';
 
 /**
  * Expo
  */
 
-class VK {
-  constructor({ appId, redirect, version = '5.100' }) {
+class VK implements IVK {
+  APP_ID: number;
+  API_VERSION: string;
+  TOKEN: string;
+  REDIRECT_URI: string;
+
+  $http: AxiosInstance;
+
+  constructor({ appId, redirect, version = '5.100' }: IVKParams) {
     this.APP_ID = appId;
     this.API_VERSION = version;
     this.TOKEN = '';
@@ -24,41 +37,25 @@ class VK {
     });
   }
 
-  /**
-   * Set API Token
-   *
-   * @param {string} token
-   */
-
-  setToken(token) {
+  public setToken(token: string): void {
     this.TOKEN = token;
   }
 
-  /**
-   * Send requrest to VK API
-   *
-   * @param {string} method VK API method
-   * @param {Object} [payload={}] Request payload
-   * @returns {Promise<any>}
-   */
-
-  async sendRequest(method, payload = {}) {
+  public async sendRequest(method: string, payload: object = {}): Promise<any> {
     const { TOKEN: access_token, API_VERSION: v } = this;
 
-    const params = Object.assign({}, payload, { access_token, v });
     const { data } = await this.$http.get(`/${method}`, {
-      params: { ...params },
+      params: {
+        ...payload,
+        access_token,
+        v,
+      },
     });
 
     return data;
   }
 
-  /**
-   * Open new window with authorization
-   *
-   */
-
-  login() {
+  public login(): void {
     const params = {
       client_id: this.APP_ID,
       display: 'page',

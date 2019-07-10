@@ -14,7 +14,7 @@ import Container from '@/components/Container';
  * Expo
  */
 
-const Layout = ({ children }) => (
+const Layout: React.FC = ({ children }) => (
   <div className="layout">
     <Container>{children}</Container>
   </div>

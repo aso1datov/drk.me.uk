@@ -20,7 +20,7 @@ import { navigation } from '@/config';
  * Expo
  */
 
-const Navigation = () => (
+const Navigation: React.FC = () => (
   <nav role="navigation">
     <Menu navigation={navigation} />
   </nav>

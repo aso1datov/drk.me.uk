@@ -4,13 +4,24 @@
 
 import React from 'react';
 import cn from 'classnames';
-import { array, object } from 'prop-types';
+
+/**
+ * Typings
+ */
+
+import { ICanteenList } from './interfaces';
+
+type ICanteenListProps = ICanteenList;
 
 /**
  * Expo
  */
 
-const CanteensList = ({ canteens, colors, selected }) => (
+const CanteenList: React.FC<ICanteenListProps> = ({
+  canteens,
+  colors,
+  selected,
+}) => (
   <ul className="canteens-list">
     {Object.keys(canteens).map((canteen, i) => (
       <li
@@ -24,14 +35,9 @@ const CanteensList = ({ canteens, colors, selected }) => (
   </ul>
 );
 
-CanteensList.propTypes = {
-  canteens: object.isRequired,
-  colors: array.isRequired,
-};
-
-CanteensList.defaultProps = {
+CanteenList.defaultProps = {
   canteens: {},
   colors: [],
 };
 
-export default CanteensList;
+export default CanteenList;

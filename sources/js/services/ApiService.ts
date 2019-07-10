@@ -13,7 +13,7 @@ const req = axios.create({
 });
 
 export const user = {
-  auth(credentials) {
+  auth(credentials: any) {
     return req.post('/auth', credentials);
   },
 };

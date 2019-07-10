@@ -72,6 +72,7 @@ module.exports = () => {
     plugins: [HTMLGenerator, CSSExtract, new Dotenv()],
     devtool: 'inline-source-map',
     devServer: {
+      hot: true,
       contentBase: resolve(__dirname, '..', 'public'),
       historyApiFallback: true,
       port: 9000,

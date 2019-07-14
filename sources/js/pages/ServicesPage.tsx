@@ -12,10 +12,17 @@ import { Link } from 'react-router-dom';
 import Section from '@/components/Section';
 
 /**
+ * Typings
+ */
+
+import { IServicesPage } from './interfaces';
+type IServicesPageProps = IServicesPage;
+
+/**
  * Expo
  */
 
-const ServicesPage = () => (
+const ServicesPage: React.FC<IServicesPageProps> = () => (
   <Section title="Services">
     <h2>Services</h2>
 

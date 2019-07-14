@@ -1,4 +1,4 @@
-import { portfolioConstants } from '../constants/portfolio';
+import { portfolioConstants } from '../reducers/portfolio/constants';
 import ApiService from '../services/ApiService';
 
 export const setPortfolioList = (items = [], count = 0) => ({

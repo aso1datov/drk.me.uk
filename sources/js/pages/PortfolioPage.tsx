@@ -4,6 +4,7 @@
 
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { ThunkDispatch } from 'redux-thunk';
 
 /**
  * Components
@@ -19,10 +20,18 @@ import PortfolioList from '@/components/Portfolio/PortfolioList';
 import { startSetPortfolioList } from '@/actions/portfolio';
 
 /**
+ * Typings
+ */
+
+import { IStore } from '@/store/interfaces';
+import { IPortfolioPage } from './interfaces';
+type IPortfolioPageProps = IPortfolioPage;
+
+/**
  * Expo
  */
 
-class PortfolioPage extends Component {
+class PortfolioPage extends Component<IPortfolioPageProps> {
   componentDidMount() {
     // this.props.startSetPortfolioList();
   }
@@ -38,12 +47,13 @@ class PortfolioPage extends Component {
   }
 }
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state: IStore) => ({
   portfolios: state.portfolio.items,
 });
 
-const mapDispatchToProps = dispatch => ({
-  startSetPortfolioList: params => dispatch(startSetPortfolioList(params)),
+const mapDispatchToProps = (dispatch: ThunkDispatch<{}, {}, any>) => ({
+  startSetPortfolioList: (params: any) =>
+    dispatch(startSetPortfolioList(params)),
 });
 
 export default connect(

@@ -12,10 +12,17 @@ import { array } from 'prop-types';
 import PortfolioListItem from './PortfolioListItem';
 
 /**
+ * Typings
+ */
+
+import { IPortfolioList } from './interfaces';
+type IPortfolioListProps = IPortfolioList;
+
+/**
  * Expo
  */
 
-const PortfolioList = ({ portfolios }) => (
+const PortfolioList: React.FC<IPortfolioListProps> = ({ portfolios }) => (
   <ol className="portfolio-list">
     {portfolios.map(portfolio => (
       <PortfolioListItem key={portfolio.id} {...portfolio} />

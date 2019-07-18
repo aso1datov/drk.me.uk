@@ -20,7 +20,7 @@ import VK from '@/services/VK';
  * Expo
  */
 
-const vk = new VK({ appId: process.env.VK_APP_ID });
+const vk = new VK({ appId: Number(process.env.VK_APP_ID) });
 
 const limits = {
   post: 100,
@@ -48,7 +48,7 @@ class VKLikesRemover extends Component {
   /**
    * Authorization on vk.com
    */
-  auth(e) {
+  auth(e: React.MouseEvent<HTMLAnchorElement>) {
     e.preventDefault();
     vk.login();
   }
@@ -236,6 +236,7 @@ class VKLikesRemover extends Component {
     );
   };
 
+  // @ts-ignore
   /**
    * Send request to remove like
    *

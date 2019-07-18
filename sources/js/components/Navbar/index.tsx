@@ -11,10 +11,16 @@ import React from 'react';
 import Navigation from '@/components/Navigation';
 
 /**
+ * Typings
+ */
+import { INavbar } from './interfaces';
+type INavbarProps = INavbar;
+
+/**
  * Expo
  */
 
-const Navbar: React.FC = () => (
+const Navbar: React.FC<INavbarProps> = () => (
   <div className="navbar">
     <Navigation />
   </div>

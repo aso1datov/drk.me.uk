@@ -11,10 +11,17 @@ import React from 'react';
 import Container from '@/components/Container';
 
 /**
+ * Typings
+ */
+import { ILayout } from './interfaces';
+
+type ILayoutProps = ILayout;
+
+/**
  * Expo
  */
 
-const Layout: React.FC = ({ children }) => (
+const Layout: React.FC<ILayoutProps> = ({ children }) => (
   <div className="layout">
     <Container>{children}</Container>
   </div>

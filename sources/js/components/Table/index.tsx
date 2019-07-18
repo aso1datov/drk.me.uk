@@ -4,13 +4,24 @@
 
 import React from 'react';
 import cn from 'classnames';
-import { string, bool, node, oneOf } from 'prop-types';
+
+/**
+ * Typings
+ */
+
+import { ITable } from './interfaces';
+type ITableProps = ITable;
 
 /**
  * Expo
  */
 
-const Table = ({ className, bordered, responsive, children }) => {
+const Table: React.FC<ITableProps> = ({
+  className,
+  bordered,
+  responsive,
+  children,
+}) => {
   const tableClasses = cn('table', className, { 'table-bordered': bordered });
 
   if (responsive) {
@@ -27,13 +38,6 @@ const Table = ({ className, bordered, responsive, children }) => {
   }
 
   return <table className={tableClasses}>{children}</table>;
-};
-
-Table.propTypes = {
-  className: string,
-  bordered: bool,
-  responsive: oneOf([true, 'sm', 'md', 'lg', 'xl']),
-  children: node,
 };
 
 export default Table;

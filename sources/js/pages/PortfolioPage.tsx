@@ -4,7 +4,6 @@
 
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { ThunkDispatch } from 'redux-thunk';
 
 /**
  * Components
@@ -23,6 +22,7 @@ import { startSetPortfolioList } from '@/actions/portfolio';
  * Typings
  */
 
+import { ThunkDispatch } from 'redux-thunk';
 import { IStore } from '@/store/interfaces';
 import { IPortfolioPage } from './interfaces';
 type IPortfolioPageProps = IPortfolioPage;

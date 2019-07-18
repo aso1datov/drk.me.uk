@@ -4,6 +4,7 @@
 
 import axios, { AxiosInstance } from 'axios';
 import { stringify } from 'query-string';
+// @ts-ignore
 import jsonpAdapter from 'axios-jsonp';
 
 /**

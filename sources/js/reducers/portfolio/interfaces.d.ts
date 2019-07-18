@@ -3,7 +3,7 @@ export interface IPortfolioItem {
   readonly title: string;
 }
 
-export interface IPortfolio {
+export interface IPortfolioState {
   readonly items: ReadonlyArray<IPortfolioItem>;
   readonly count: number;
 }

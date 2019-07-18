@@ -8,14 +8,14 @@ import { portfolioConstants } from './constants';
  * Interfaces
  */
 
-import { IPortfolio } from './interfaces';
+import { IPortfolioState } from './interfaces';
 import { AnyAction, Reducer } from 'redux';
 
 /**
  * Initial state
  */
 
-const initialState: IPortfolio = {
+const initialState: IPortfolioState = {
   items: [],
   count: 0,
 };
@@ -24,7 +24,7 @@ const initialState: IPortfolio = {
  * Expo
  */
 
-const reducer: Reducer<IPortfolio, AnyAction> = (
+const reducer: Reducer<IPortfolioState, AnyAction> = (
   state = initialState,
   action
 ) => {

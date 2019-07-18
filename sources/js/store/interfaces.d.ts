@@ -1,5 +1,5 @@
-import { IPortfolio } from '@/reducers/portfolio/interfaces';
+import { IPortfolioState } from '@/reducers/portfolio/interfaces';
 
 export interface IStore {
-  portfolio: IPortfolio;
+  portfolio: IPortfolioState;
 }

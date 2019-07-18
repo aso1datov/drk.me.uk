@@ -2,13 +2,21 @@
  * Vendor
  */
 
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 
 /**
  * Components
  */
 
 import PhrasesList from './PhrasesList';
+
+/**
+ * Typings
+ */
+
+import { ILoremIpsum, ILoremIpsumState } from './interfaces';
+
+type ILoremIpsumProps = ILoremIpsum;
 
 /**
  * Phrases
@@ -26,14 +34,14 @@ import { shuffle } from '@/utils';
  * Expo
  */
 
-class LoremIpsum extends Component {
+class LoremIpsum extends PureComponent<ILoremIpsumProps, ILoremIpsumState> {
   state = {
     type: 'paragraph',
     lines: 10,
-    generated: [],
+    generated: [''],
   };
 
-  handleLinesChange = ({ target }) => {
+  handleLinesChange = ({ target }: React.ChangeEvent<HTMLInputElement>) => {
     const lines = parseInt(target.value, 10) || 1;
 
     if (!isNaN(lines)) {
@@ -41,7 +49,7 @@ class LoremIpsum extends Component {
     }
   };
 
-  handleTypeChange = ({ target }) => {
+  handleTypeChange = ({ target }: React.ChangeEvent<HTMLSelectElement>) => {
     this.setState(() => ({ type: target.value }));
   };
 
@@ -65,10 +73,10 @@ class LoremIpsum extends Component {
               className="form-control"
               type="text"
               name="lines"
-              size="4"
+              size={4}
               value={lines}
               onChange={this.handleLinesChange}
-              maxLength="3"
+              maxLength={3}
             />
           </span>
 

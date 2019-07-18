@@ -3,7 +3,6 @@
  */
 
 import React from 'react';
-import { array, func } from 'prop-types';
 
 /**
  * Components
@@ -12,10 +11,18 @@ import { array, func } from 'prop-types';
 import PhotoItem from './PhotoItem';
 
 /**
+ * Typings
+ */
+
+import { IVKLikesRemoverPhotos } from './interfaces';
+
+type IVKLikesRemoverPhotosProps = IVKLikesRemoverPhotos;
+
+/**
  * Expo
  */
 
-const Photos = ({ photos, onRemove }) => (
+const Photos: React.FC<IVKLikesRemoverPhotosProps> = ({ photos, onRemove }) => (
   <div className="photos-gallery">
     {photos.length > 0 &&
       photos.map(photo => (
@@ -27,11 +34,6 @@ const Photos = ({ photos, onRemove }) => (
       ))}
   </div>
 );
-
-Photos.propTypes = {
-  photos: array.isRequired,
-  onRemove: func.isRequired,
-};
 
 Photos.defaultProps = {
   photos: [],

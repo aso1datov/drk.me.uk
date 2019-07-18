@@ -9,13 +9,14 @@ import { Link } from 'react-router-dom';
  * Components
  */
 
-import Section from '@/components/Section';
+import { Section } from '@/components/common';
 
 /**
  * Typings
  */
 
 import { IServicesPage } from './interfaces';
+
 type IServicesPageProps = IServicesPage;
 
 /**

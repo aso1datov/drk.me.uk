@@ -3,7 +3,6 @@
  */
 
 import React from 'react';
-import { string, array, func } from 'prop-types';
 
 /**
  * Components
@@ -15,10 +14,22 @@ import Links from './Links';
 import Videos from './Videos';
 
 /**
+ * Typings
+ */
+
+import { IVKLikesRemoverLikesList } from './interfaces';
+
+type IVKLikesRemoverLikesListProps = IVKLikesRemoverLikesList;
+
+/**
  * Expo
  */
 
-const LikesList = ({ type, likes, onRemove }) => {
+const LikesList: React.FC<IVKLikesRemoverLikesListProps> = ({
+  type,
+  likes,
+  onRemove,
+}) => {
   switch (type) {
     case 'photo':
       return <Photos photos={likes} onRemove={onRemove} />;
@@ -31,12 +42,6 @@ const LikesList = ({ type, likes, onRemove }) => {
     default:
       return null;
   }
-};
-
-LikesList.propTypes = {
-  likes: array.isRequired,
-  type: string.isRequired,
-  onRemove: func.isRequired,
 };
 
 LikesList.defaultProps = {

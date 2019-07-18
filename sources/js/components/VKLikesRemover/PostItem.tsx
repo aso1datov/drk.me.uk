@@ -3,13 +3,19 @@
  */
 
 import React from 'react';
-import { number, string, func } from 'prop-types';
+
+/**
+ * Typings
+ */
+
+import { IVKPost } from './interfaces';
+type IVKPostProps = IVKPost;
 
 /**
  * Expo
  */
 
-const PostItem = ({ id, owner_id, text, onRemove }) => {
+const PostItem: React.FC<IVKPostProps> = ({ id, owner_id, text, onRemove }) => {
   const link = `https://vk.com/wall${owner_id}_${id}`;
 
   return (
@@ -30,13 +36,6 @@ const PostItem = ({ id, owner_id, text, onRemove }) => {
       </td>
     </tr>
   );
-};
-
-PostItem.propTypes = {
-  id: number.isRequired,
-  owner_id: number.isRequired,
-  text: string.isRequired,
-  onRemove: func.isRequired,
 };
 
 export default PostItem;

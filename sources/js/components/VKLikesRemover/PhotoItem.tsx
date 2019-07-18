@@ -3,19 +3,38 @@
  */
 
 import React from 'react';
-import { number, array, func } from 'prop-types';
+
+/**
+ * Typings
+ */
+
+import { IVKPhoto } from './interfaces';
+
+type IVKPhotoProps = IVKPhoto;
 
 /**
  * Expo
  */
 
-const PhotoItem = ({ id, owner_id, sizes, onRemove }) => {
-  const photo = sizes.find(size => size.type === 'm') || {};
+const PhotoItem: React.FC<IVKPhotoProps> = ({
+  id,
+  owner_id,
+  sizes,
+  onRemove,
+}) => {
+  const photo = sizes.find(size => size.type === 'm');
 
   return (
     <div className="photos-gallery-item">
       <figure>
-        <img src={photo.url} width={photo.width} height={photo.height} alt="" />
+        {photo && (
+          <img
+            src={photo.url}
+            width={photo.width}
+            height={photo.height}
+            alt=""
+          />
+        )}
 
         <figcaption>
           <button type="button" onClick={onRemove.bind(null, id, owner_id)}>
@@ -25,13 +44,6 @@ const PhotoItem = ({ id, owner_id, sizes, onRemove }) => {
       </figure>
     </div>
   );
-};
-
-PhotoItem.propTypes = {
-  id: number.isRequired,
-  owner_id: number.isRequired,
-  sizes: array.isRequired,
-  onRemove: func.isRequired,
 };
 
 export default PhotoItem;

@@ -31,12 +31,18 @@ import { user } from '@/services/ApiService';
 import '../scss/styles.scss';
 
 /**
+ * Typings
+ */
+
+interface IApp {}
+
+/**
  * Expo
  */
 
 const store = configureStore();
 
-const App: React.FC = () => (
+const App: React.FC<IApp> = () => (
   <Provider store={store}>
     <AppRouter />
   </Provider>

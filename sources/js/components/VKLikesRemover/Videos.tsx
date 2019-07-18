@@ -3,7 +3,6 @@
  */
 
 import React from 'react';
-import { array, func } from 'prop-types';
 
 /**
  * Components
@@ -12,10 +11,17 @@ import { array, func } from 'prop-types';
 import VideoItem from './VideoItem';
 
 /**
+ * Typings
+ */
+
+import { IVKLikesRemoverVideos } from './interfaces';
+type IVKLikesRemoverVideosProps = IVKLikesRemoverVideos;
+
+/**
  * Expo
  */
 
-const Videos = ({ videos, onRemove }) => (
+const Videos: React.FC<IVKLikesRemoverVideosProps> = ({ videos, onRemove }) => (
   <div className="videos-gallery">
     {videos.map(video => (
       <VideoItem
@@ -26,11 +32,6 @@ const Videos = ({ videos, onRemove }) => (
     ))}
   </div>
 );
-
-Videos.propTypes = {
-  videos: array.isRequired,
-  onRemove: func.isRequired,
-};
 
 Videos.defaultProps = {
   videos: [],

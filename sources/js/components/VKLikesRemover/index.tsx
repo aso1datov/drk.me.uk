@@ -56,7 +56,7 @@ class VKLikesRemover extends Component {
   /**
    * Handle token change
    */
-  handleTokenChange = ({ target }) => {
+  handleTokenChange = ({ target }: React.ChangeEvent<HTMLInputElement>) => {
     this.setState(
       () => ({
         token: target.value,
@@ -71,7 +71,7 @@ class VKLikesRemover extends Component {
   /**
    * Handle type change
    */
-  handleTypeChange = ({ target }) => {
+  handleTypeChange = ({ target }: React.ChangeEvent<HTMLSelectElement>) => {
     const type = target.value;
     const limit = limits[type] || 1000;
 
@@ -112,7 +112,7 @@ class VKLikesRemover extends Component {
    *
    * @returns {string} Method name
    */
-  getMethodName = () => {
+  getMethodName = (): string => {
     const { type } = this.state.likes;
 
     switch (type) {
@@ -134,7 +134,7 @@ class VKLikesRemover extends Component {
    * @returns {Promise<void>}
    */
 
-  getLikes = async start_from => {
+  getLikes = async (start_from: string): Promise<void> => {
     if (this.state.isLoading) return;
 
     const { offset, limit: count } = this.state.request;
@@ -173,7 +173,7 @@ class VKLikesRemover extends Component {
    * @returns {string} Captcha key
    */
 
-  handleCaptcha = url => {
+  handleCaptcha = (url: string): string => {
     return prompt(url);
   };
 
@@ -186,7 +186,10 @@ class VKLikesRemover extends Component {
    * @returns {Promise<void>}
    */
 
-  handleLikeRemove = async (id, owner_id) => {
+  handleLikeRemove = async (
+    id: string | number,
+    owner_id?: number
+  ): Promise<void> => {
     const { type } = this.state.likes;
 
     this.setState(() => ({ isLoading: true }));
@@ -222,7 +225,7 @@ class VKLikesRemover extends Component {
    * @param {function} [cb] Callback function
    */
 
-  removeItem = (id, cb = () => void 0) => {
+  removeItem = (id: number | string, cb?: () => any) => {
     this.setState(
       prevState => ({
         isLoading: false,
@@ -240,13 +243,18 @@ class VKLikesRemover extends Component {
   /**
    * Send request to remove like
    *
-   * @param {number} item_id Item ID
+   * @param {string|number} item_id Item ID
    * @param {number} [owner_id] Item owner ID
    * @param {string} type Item type
    * @param {object} [extra] Extra payload
    * @returns {Promise<any>} Promise represent request
    */
-  removeLike = (item_id, owner_id, type, extra = {}) => {
+  removeLike = (
+    item_id: string | number,
+    owner_id: number,
+    type: string,
+    extra: object = {}
+  ): Promise<any> => {
     const payload = {
       item_id,
       owner_id,
@@ -262,7 +270,7 @@ class VKLikesRemover extends Component {
    *
    * @param {object} [extra] Extra payload
    */
-  removeAllLikes = (extra = {}) => {
+  removeAllLikes = (extra: object = {}) => {
     const { items = [], type } = this.state.likes;
     const [item] = items;
 
@@ -289,12 +297,18 @@ class VKLikesRemover extends Component {
             }
           } else if (error.error_code === 14) {
             this.handleError({ likes: error.error_msg });
-            this.removeItem(item.id, setTimeout(this.removeAllLikes, 2000));
+            this.removeItem(
+              item.id,
+              window.setTimeout(this.removeAllLikes, 2000)
+            );
           } else {
             this.handleError({ likes: error.error_msg });
           }
         } else if (response && response.likes) {
-          this.removeItem(item.id, setTimeout(this.removeAllLikes, 2000));
+          this.removeItem(
+            item.id,
+            window.setTimeout(this.removeAllLikes, 2000)
+          );
         }
       }
     );
@@ -305,7 +319,7 @@ class VKLikesRemover extends Component {
    *
    * @param {object} [error]
    */
-  handleError = (error = {}) => {
+  handleError = (error: object = {}) => {
     this.setState(prevState => ({
       isLoading: false,
       errors: {

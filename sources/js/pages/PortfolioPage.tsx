@@ -9,7 +9,7 @@ import { connect } from 'react-redux';
  * Components
  */
 
-import Section from '@/components/Section';
+import { Section } from '@/components/common';
 import PortfolioList from '@/components/Portfolio/PortfolioList';
 
 /**
@@ -25,6 +25,7 @@ import { startSetPortfolioList } from '@/actions/portfolio';
 import { ThunkDispatch } from 'redux-thunk';
 import { IStore } from '@/store/interfaces';
 import { IPortfolioPage } from './interfaces';
+
 type IPortfolioPageProps = IPortfolioPage;
 
 /**

@@ -3,21 +3,28 @@
  */
 
 import React from 'react';
-import { array, func } from 'prop-types';
 
 /**
  * Components
  */
 
-import Table from '@/components/Table';
+import { Table } from '@/components/common/';
 import LinkItem from './LinkItem';
+
+/**
+ * Typings
+ */
+
+import { IVKLikesRemoverLinks } from './interfaces';
+
+type IVKLikesRemoverLinksProps = IVKLikesRemoverLinks;
 
 /**
  * Expo
  */
 
-const Links = ({ links, onRemove }) => (
-  <Table responsive="md" bordered>
+const Links: React.FC<IVKLikesRemoverLinksProps> = ({ links, onRemove }) => (
+  <Table responsive="md" bordered={true}>
     <thead>
       <tr>
         <th>Title</th>
@@ -34,11 +41,6 @@ const Links = ({ links, onRemove }) => (
     )}
   </Table>
 );
-
-Links.propTypes = {
-  links: array.isRequired,
-  onRemove: func.isRequired,
-};
 
 Links.defaultProps = {
   links: [],

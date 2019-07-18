@@ -5,10 +5,18 @@
 import React from 'react';
 
 /**
+ * Component
+ */
+
+import { IVKLink } from './interfaces';
+
+type IVKLinkProps = IVKLink;
+
+/**
  * Expo
  */
 
-const LinkItem = ({ title, url, onRemove }) => (
+const LinkItem: React.FC<IVKLinkProps> = ({ id, title, url, onRemove }) => (
   <tr>
     <td>
       <a href={url} target="_blank">

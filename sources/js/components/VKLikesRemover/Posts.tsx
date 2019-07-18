@@ -1,10 +1,30 @@
+/**
+ * Vendor
+ */
+
 import React from 'react';
-import { array, func } from 'prop-types';
-import Table from '@/components/Table';
+
+/**
+ * Components
+ */
+
+import { Table } from '@/components/common/';
 import PostItem from './PostItem';
 
-const Posts = ({ posts, onRemove }) => (
-  <Table bordered responsive="sm">
+/**
+ * Typings
+ */
+
+import { IVKLikesRemoverPosts } from './interfaces';
+
+type IVKLikesRemoverPostsProps = IVKLikesRemoverPosts;
+
+/**
+ * Expo
+ */
+
+const Posts: React.FC<IVKLikesRemoverPostsProps> = ({ posts, onRemove }) => (
+  <Table bordered={true} responsive="sm">
     <thead>
       <tr>
         <th>Post</th>
@@ -25,11 +45,6 @@ const Posts = ({ posts, onRemove }) => (
     )}
   </Table>
 );
-
-Posts.propTypes = {
-  posts: array.isRequired,
-  onRemove: func.isRequired,
-};
 
 Posts.defaultProps = {
   posts: [],

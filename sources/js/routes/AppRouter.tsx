@@ -10,7 +10,6 @@ import { createBrowserHistory } from 'history';
  * Routes
  */
 
-import PrivateRoute from './PrivateRoute';
 import PublicRoute from './PublicRoute';
 
 /**
@@ -18,8 +17,7 @@ import PublicRoute from './PublicRoute';
  */
 
 import Navbar from '@/components/Navbar';
-import Layout from '@/components/Layout';
-import Header from '@/components/Header';
+import { Layout, Header } from '@/components/common';
 
 /**
  * Pages

@@ -8,7 +8,7 @@ import React from 'react';
  * Components
  */
 
-import Container from '@/components/Container';
+import { Container } from '@/components/common';
 
 /**
  * Typings

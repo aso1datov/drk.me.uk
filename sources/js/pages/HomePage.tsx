@@ -8,13 +8,14 @@ import React from 'react';
  * Components
  */
 
-import Section from '@/components/Section';
+import { Section } from '@/components/common';
 
 /**
  * Interfaces
  */
 
 import { IHomePage } from './interfaces';
+
 type IHomePageProps = IHomePage;
 
 /**

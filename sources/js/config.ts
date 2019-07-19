@@ -5,11 +5,6 @@ export const navigation = [
     exact: true,
   },
   {
-    to: '/portfolio',
-    title: 'Portfolio',
-    exact: false,
-  },
-  {
     to: '/services',
     title: 'Services',
     exact: false,

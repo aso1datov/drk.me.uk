@@ -19,12 +19,6 @@ import configureStore from '@/store/configureStore';
 import AppRouter from '@/routes/AppRouter';
 
 /**
- * Services
- */
-
-import { user } from '@/services/ApiService';
-
-/**
  * Styles
  */
 

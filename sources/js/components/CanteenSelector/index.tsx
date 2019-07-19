@@ -40,7 +40,7 @@ class CanteenSelector extends PureComponent<
   public slices: Array<{ [x: string]: number[] }>;
   public timer: number;
 
-  static defaultProps = {
+  public static defaultProps = {
     data: {},
     width: 300,
     height: 300,
@@ -64,32 +64,32 @@ class CanteenSelector extends PureComponent<
     };
   }
 
-  componentDidMount() {
+  public componentDidMount(): void {
     this.chart = this.$canvasRef.current;
     this.makeCanvas();
     this.setContext();
     this.draw();
   }
 
-  componentWillUnmount() {
+  public componentWillUnmount(): void {
     clearTimeout(this.timer);
   }
 
-  makeCanvas = () => {
+  private makeCanvas(): void {
     this.chart.width = this.props.width;
     this.chart.height = this.props.height;
-  };
+  }
 
-  setContext = () => {
+  private setContext(): void {
     this.ctx = this.chart.getContext('2d');
-  };
+  }
 
   /**
    * Get sum of values
    *
    * @return {number} Total
    */
-  get total(): number {
+  public get total(): number {
     return Object.values(this.props.data).reduce(
       (total, value) => total + value,
       0
@@ -101,49 +101,13 @@ class CanteenSelector extends PureComponent<
    *
    * @return {object} { centerX, centerY, radius }
    */
-  get coords(): IChartCoords {
+  public get coords(): IChartCoords {
     return {
       centerX: this.chart.width / 2,
       centerY: this.chart.height / 2,
       radius: Math.min(this.chart.width / 2, this.chart.height / 2),
     };
   }
-
-  /**
-   * Draw line
-   *
-   * @param {number} startX - the X coordinate of the line starting point
-   * @param {number} startY - the Y coordinate of the line starting point
-   * @param {number} endX - the X coordinate of the line end point
-   * @param {number} endY - the Y coordinate of the line end point
-   */
-  drawLine = (startX: number, startY: number, endX: number, endY: number) => {
-    this.ctx.beginPath();
-    this.ctx.moveTo(startX, startY);
-    this.ctx.lineTo(endX, endY);
-    this.ctx.stroke();
-  };
-
-  /**
-   * Draw arc
-   *
-   * @param {number} centerX - the X coordinate of the circle center
-   * @param {number} centerY - the Y coordinate of the circle center
-   * @param {number} radius - the X coordinate of the line end point
-   * @param {number} startAngle - the start angle in radians where the portion of the circle starts
-   * @param {number} endAngle - the end angle in radians where the portion of circle ends
-   */
-  drawArc = (
-    centerX: number,
-    centerY: number,
-    radius: number,
-    startAngle: number,
-    endAngle: number
-  ) => {
-    this.ctx.beginPath();
-    this.ctx.arc(centerX, centerY, radius, startAngle, endAngle);
-    this.ctx.stroke();
-  };
 
   /**
    * Draw pie slice
@@ -155,14 +119,14 @@ class CanteenSelector extends PureComponent<
    * @param {number} endAngle - the end angle in radians where the portion of circle ends
    * @param {string} color - the color used to fill slice
    */
-  drawPieSlice = (
+  public drawPieSlice = (
     centerX: number,
     centerY: number,
     radius: number,
     startAngle: number,
     endAngle: number,
     color: string
-  ) => {
+  ): void => {
     this.ctx.fillStyle = color;
     this.ctx.beginPath();
     this.ctx.moveTo(centerX, centerY);
@@ -176,7 +140,7 @@ class CanteenSelector extends PureComponent<
    *
    * @param {number} degrees Rotate angle in degrees
    */
-  rotateCanvas = (degrees: number) => {
+  public rotateCanvas = (degrees: number): void => {
     this.setState(
       prevState => ({
         rotate: true,
@@ -192,7 +156,7 @@ class CanteenSelector extends PureComponent<
    * Draw pie chart
    *
    */
-  draw = () => {
+  private draw(): void {
     const { data, colors, doughnutHoleSize } = this.props;
     const { centerX, centerY, radius } = this.coords;
 
@@ -201,7 +165,7 @@ class CanteenSelector extends PureComponent<
     let key;
 
     for (key in data) {
-      if (data.hasOwnProperty(key)) {
+      if (Object.prototype.hasOwnProperty.call(data, key)) {
         let sliceAngle = (2 * Math.PI * data[key]) / this.total;
         let endAngle = startAngle + sliceAngle;
 
@@ -233,9 +197,9 @@ class CanteenSelector extends PureComponent<
         'white'
       );
     }
-  };
+  }
 
-  selectCanteen = () => {
+  public selectCanteen = (): void => {
     this.rotateCanvas(getRandomInt(15, 1800));
   };
 
@@ -243,7 +207,7 @@ class CanteenSelector extends PureComponent<
    * Find chosen slice
    *
    */
-  getWinner = () => {
+  public getWinner = (): void => {
     const { degrees } = this.state;
     const point = 360 - (degrees % 360);
 
@@ -254,7 +218,7 @@ class CanteenSelector extends PureComponent<
     }, this.props.rotateDuration);
   };
 
-  findCanteen = (point: number) =>
+  public findCanteen = (point: number): string =>
     this.slices.reduce((acc, slice) => {
       const canteen = Object.keys(slice)[0];
       const [start, end] = slice[canteen];
@@ -262,7 +226,7 @@ class CanteenSelector extends PureComponent<
       return point >= start && point < end ? canteen : acc;
     }, '');
 
-  render() {
+  public render(): React.ReactElement {
     const { data, colors, rotateDuration } = this.props;
     const { rotate, degrees, selected } = this.state;
     const style: ICustomVariables = {

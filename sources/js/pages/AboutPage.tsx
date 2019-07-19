@@ -25,6 +25,18 @@ type IAboutPageProps = IAboutPage;
 const AboutPage: React.FC<IAboutPageProps> = () => (
   <Section title="About">
     <h2>About</h2>
+    <ul>
+      <li>
+        <a href="https://github.com/aso1datov" target="_blank">
+          github
+        </a>
+      </li>
+      <li>
+        <a href="https://moikrug.ru/alxdrk" target="_blank">
+          moikrug
+        </a>
+      </li>
+    </ul>
   </Section>
 );
 

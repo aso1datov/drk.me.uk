@@ -1,5 +1,19 @@
 export interface IVKLikesRemover {}
 
+export interface IVKLikesRemoverState {
+  isLoading: boolean;
+  token: string;
+  likes: {
+    type: string;
+    items: ReadonlyArray<any>;
+    count: number;
+  };
+  request: {
+    [key: string]: number;
+  };
+  errors: any;
+}
+
 export interface IVKLikesRemoverLikesList {
   readonly type: string;
   readonly likes: ReadonlyArray<any>;

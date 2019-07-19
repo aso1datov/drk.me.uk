@@ -2,7 +2,7 @@
  * Vendor
  */
 
-import React, { Component, Fragment } from 'react';
+import React, { PureComponent, Fragment } from 'react';
 
 /**
  * Components
@@ -17,53 +17,72 @@ import LikesList from './LikesList';
 import VK from '@/services/VK';
 
 /**
+ * Typings
+ */
+
+import { IVKLikesRemover, IVKLikesRemoverState } from './interfaces';
+
+type IVKLikesRemoverProps = IVKLikesRemover;
+
+/**
  * Expo
  */
 
-const vk = new VK({ appId: Number(process.env.VK_APP_ID) });
-
-const limits = {
+const limits: { [key: string]: number } = {
   post: 100,
   link: 1000,
   photo: 1000,
   video: 1000,
 };
 
-class VKLikesRemover extends Component {
-  state = {
-    isLoading: false,
-    token: '',
-    likes: {
-      type: '',
-      items: [],
-      count: 0,
-    },
-    request: {
-      offset: 0,
-      limit: 100,
-    },
-    errors: {},
-  };
+class VKLikesRemover extends PureComponent<
+  IVKLikesRemoverProps,
+  IVKLikesRemoverState
+> {
+  private vk: VK;
+
+  constructor(props: IVKLikesRemoverProps) {
+    super(props);
+
+    this.state = {
+      isLoading: false,
+      token: '',
+      likes: {
+        type: '',
+        items: [],
+        count: 0,
+      },
+      request: {
+        offset: 0,
+        limit: 100,
+      },
+      errors: {},
+    };
+
+    this.vk = new VK({ appId: Number(process.env.VK_APP_ID) });
+  }
 
   /**
    * Authorization on vk.com
    */
-  auth(e: React.MouseEvent<HTMLAnchorElement>) {
+  public auth = (e: React.MouseEvent<HTMLAnchorElement>): void => {
     e.preventDefault();
-    vk.login();
-  }
+    this.vk.login();
+  };
 
   /**
    * Handle token change
    */
-  handleTokenChange = ({ target }: React.ChangeEvent<HTMLInputElement>) => {
+  public handleTokenChange = ({
+    target,
+  }: React.ChangeEvent<HTMLInputElement>): void => {
     this.setState(
       () => ({
         token: target.value,
         errors: {},
       }),
       () => {
-        vk.setToken(this.state.token.trim());
+        this.vk.setToken(this.state.token.trim());
       }
     );
   };
@@ -71,7 +90,9 @@ class VKLikesRemover extends Component {
   /**
    * Handle type change
    */
-  handleTypeChange = ({ target }: React.ChangeEvent<HTMLSelectElement>) => {
+  public handleTypeChange = ({
+    target,
+  }: React.ChangeEvent<HTMLSelectElement>): void => {
     const type = target.value;
     const limit = limits[type] || 1000;
 
@@ -98,13 +119,22 @@ class VKLikesRemover extends Component {
   /**
    * Handle request settings change
    */
-  handleLimitsChange = ({ target }) => {
-    this.setState(prevState => ({
-      request: {
-        ...prevState.request,
-        [target.name]: target.value,
-      },
-    }));
+  public handleLimitsChange = ({
+    target,
+  }: React.ChangeEvent<HTMLInputElement>): void => {
+    this.setState(prevState => {
+      const { request } = prevState;
+      const value = !isNaN(+target.value)
+        ? Number(target.value)
+        : request[target.name];
+
+      return {
+        request: {
+          ...prevState.request,
+          [target.name]: value,
+        },
+      };
+    });
   };
 
   /**
@@ -112,7 +142,7 @@ class VKLikesRemover extends Component {
    *
    * @returns {string} Method name
    */
-  getMethodName = (): string => {
+  private getMethodName(): string {
     const { type } = this.state.likes;
 
     switch (type) {
@@ -125,7 +155,7 @@ class VKLikesRemover extends Component {
       case 'video':
         return 'fave.getVideos';
     }
-  };
+  }
 
   /**
    * Send request to get likes
@@ -134,7 +164,7 @@ class VKLikesRemover extends Component {
    * @returns {Promise<void>}
    */
 
-  getLikes = async (start_from: string): Promise<void> => {
+  public getLikes = async (start_from?: string): Promise<void> => {
     if (this.state.isLoading) return;
 
     const { offset, limit: count } = this.state.request;
@@ -143,7 +173,7 @@ class VKLikesRemover extends Component {
 
     this.setState(() => ({ isLoading: true }));
 
-    const { response = {}, error } = await vk.sendRequest(method, payload);
+    const { response = {}, error } = await this.vk.sendRequest(method, payload);
 
     if (error) {
       this.handleError({ likes: error.error_msg });
@@ -173,7 +203,7 @@ class VKLikesRemover extends Component {
    * @returns {string} Captcha key
    */
 
-  handleCaptcha = (url: string): string => {
+  public handleCaptcha = (url: string): string => {
     return prompt(url);
   };
 
@@ -186,7 +216,7 @@ class VKLikesRemover extends Component {
    * @returns {Promise<void>}
    */
 
-  handleLikeRemove = async (
+  public handleLikeRemove = async (
     id: string | number,
     owner_id?: number
   ): Promise<void> => {
@@ -225,7 +255,7 @@ class VKLikesRemover extends Component {
    * @param {function} [cb] Callback function
    */
 
-  removeItem = (id: number | string, cb?: () => any) => {
+  public removeItem = (id: number | string, cb?: () => any): void => {
     this.setState(
       prevState => ({
         isLoading: false,
@@ -239,7 +269,6 @@ class VKLikesRemover extends Component {
     );
   };
 
-  // @ts-ignore
   /**
    * Send request to remove like
    *
@@ -249,7 +278,7 @@ class VKLikesRemover extends Component {
    * @param {object} [extra] Extra payload
    * @returns {Promise<any>} Promise represent request
    */
-  removeLike = (
+  public removeLike = (
     item_id: string | number,
     owner_id: number,
     type: string,
@@ -262,7 +291,7 @@ class VKLikesRemover extends Component {
       ...extra,
     };
 
-    return vk.sendRequest('likes.delete', payload);
+    return this.vk.sendRequest('likes.delete', payload);
   };
 
   /**
@@ -270,7 +299,7 @@ class VKLikesRemover extends Component {
    *
    * @param {object} [extra] Extra payload
    */
-  removeAllLikes = (extra: object = {}) => {
+  public removeAllLikes = (extra: object = {}): void => {
     const { items = [], type } = this.state.likes;
     const [item] = items;
 
@@ -297,16 +326,14 @@ class VKLikesRemover extends Component {
             }
           } else if (error.error_code === 14) {
             this.handleError({ likes: error.error_msg });
-            this.removeItem(
-              item.id,
+            this.removeItem(item.id, () =>
               window.setTimeout(this.removeAllLikes, 2000)
             );
           } else {
             this.handleError({ likes: error.error_msg });
           }
         } else if (response && response.likes) {
-          this.removeItem(
-            item.id,
+          this.removeItem(item.id, () =>
             window.setTimeout(this.removeAllLikes, 2000)
           );
         }
@@ -319,7 +346,7 @@ class VKLikesRemover extends Component {
    *
    * @param {object} [error]
    */
-  handleError = (error: object = {}) => {
+  public handleError = (error: object = {}): void => {
     this.setState(prevState => ({
       isLoading: false,
       errors: {
@@ -329,16 +356,18 @@ class VKLikesRemover extends Component {
     }));
   };
 
-  increaseOffset = () => {
+  public increaseOffset = (): void => {
     this.setState(
-      prevState => ({
-        request: {
-          ...prevState.request,
-          offset:
-            parseInt(prevState.request.offset, 10) +
-            parseInt(prevState.request.limit, 10),
-        },
-      }),
+      prevState => {
+        const { request } = prevState;
+
+        return {
+          request: {
+            ...request,
+            offset: request.offset + request.limit,
+          },
+        };
+      },
       () => {
         this.getLikes();
       }
@@ -399,7 +428,7 @@ class VKLikesRemover extends Component {
                 <label htmlFor="limit">Count:</label>{' '}
                 <input
                   className="form-control"
-                  size="5"
+                  size={5}
                   name="limit"
                   value={request.limit}
                   onChange={this.handleLimitsChange}
@@ -410,7 +439,7 @@ class VKLikesRemover extends Component {
                 <label htmlFor="offset">Offset:</label>{' '}
                 <input
                   className="form-control"
-                  size="5"
+                  size={5}
                   name="offset"
                   value={request.offset}
                   onChange={this.handleLimitsChange}

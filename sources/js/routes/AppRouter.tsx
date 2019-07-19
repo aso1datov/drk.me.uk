@@ -24,7 +24,6 @@ import { Layout, Header } from '@/components/common';
  */
 
 import HomePage from '@/pages/HomePage';
-import PortfolioPage from '@/pages/PortfolioPage';
 import AboutPage from '@/pages/AboutPage';
 import ServicesPage from '@/pages/ServicesPage';
 import LoremIpsumPage from '@/pages/services/LoremIpsumPage';
@@ -48,8 +47,6 @@ const AppRouter = () => (
       <Navbar />
       <Switch>
         <PublicRoute path="/" component={HomePage} exact />
-        <PublicRoute path="/portfolio" component={PortfolioPage} exact />
-        <PublicRoute path="/portfolio/:id" component={PortfolioPage} exact />
         <PublicRoute path="/about" component={AboutPage} exact />
         <PublicRoute path="/services" component={ServicesPage} exact />
         <PublicRoute

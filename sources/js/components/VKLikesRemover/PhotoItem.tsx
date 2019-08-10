@@ -5,6 +5,12 @@
 import React from 'react';
 
 /**
+ * Components
+ */
+
+import { Button } from '@/components/common';
+
+/**
  * Typings
  */
 
@@ -37,9 +43,7 @@ const PhotoItem: React.FC<IVKPhotoProps> = ({
         )}
 
         <figcaption>
-          <button type="button" onClick={onRemove.bind(null, id, owner_id)}>
-            Remove
-          </button>
+          <Button onClick={onRemove.bind(null, id, owner_id)}>Remove</Button>
         </figcaption>
       </figure>
     </div>

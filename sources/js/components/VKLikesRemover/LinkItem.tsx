@@ -5,7 +5,13 @@
 import React from 'react';
 
 /**
- * Component
+ * Components
+ */
+
+import { Button } from '@/components/common';
+
+/**
+ * Typings
  */
 
 import { IVKLink } from './interfaces';
@@ -24,9 +30,9 @@ const LinkItem: React.FC<IVKLinkProps> = ({ id, title, url, onRemove }) => (
       </a>
     </td>
     <td className="text-right">
-      <button type="button" onClick={onRemove.bind(null, id)}>
+      <Button onClick={onRemove.bind(null, id)} aria-label="Remove">
         Remove
-      </button>
+      </Button>
     </td>
   </tr>
 );

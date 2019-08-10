@@ -9,6 +9,7 @@ import React, { PureComponent } from 'react';
  */
 
 import PhrasesList from './PhrasesList';
+import { Button } from '@/components/common';
 
 /**
  * Typings
@@ -41,7 +42,9 @@ class LoremIpsum extends PureComponent<ILoremIpsumProps, ILoremIpsumState> {
     generated: [''],
   };
 
-  handleLinesChange = ({ target }: React.ChangeEvent<HTMLInputElement>) => {
+  public handleLinesChange = ({
+    target,
+  }: React.ChangeEvent<HTMLInputElement>): void => {
     const lines = parseInt(target.value, 10) || 1;
 
     if (!isNaN(lines)) {
@@ -49,18 +52,20 @@ class LoremIpsum extends PureComponent<ILoremIpsumProps, ILoremIpsumState> {
     }
   };
 
-  handleTypeChange = ({ target }: React.ChangeEvent<HTMLSelectElement>) => {
+  public handleTypeChange = ({
+    target,
+  }: React.ChangeEvent<HTMLSelectElement>): void => {
     this.setState(() => ({ type: target.value }));
   };
 
-  makePhrases = () => {
+  public makePhrases = (): void => {
     const { lines } = this.state;
     const generated = shuffle(phrases).slice(0, lines);
 
     this.setState(() => ({ generated }));
   };
 
-  render() {
+  public render(): React.ReactElement {
     const { type, lines, generated } = this.state;
 
     return (
@@ -94,9 +99,7 @@ class LoremIpsum extends PureComponent<ILoremIpsumProps, ILoremIpsumState> {
             </select>
           </span>
 
-          <button type="button" onClick={this.makePhrases}>
-            Generate
-          </button>
+          <Button onClick={this.makePhrases}>Generate</Button>
         </fieldset>
 
         <PhrasesList type={type} phrases={generated} />

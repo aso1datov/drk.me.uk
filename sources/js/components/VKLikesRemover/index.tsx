@@ -9,6 +9,7 @@ import React, { PureComponent, Fragment } from 'react';
  */
 
 import LikesList from './LikesList';
+import { Button } from '@/components/common';
 
 /**
  * Services
@@ -374,7 +375,7 @@ class VKLikesRemover extends PureComponent<
     );
   };
 
-  render() {
+  public render(): React.ReactNode {
     const { isLoading, token, likes, request, errors } = this.state;
 
     return (
@@ -444,13 +445,9 @@ class VKLikesRemover extends PureComponent<
                   value={request.offset}
                   onChange={this.handleLimitsChange}
                 />
-                <button
-                  type="button"
-                  onClick={this.increaseOffset}
-                  disabled={!likes.type}
-                >
+                <Button onClick={this.increaseOffset} disabled={!likes.type}>
                   ++
-                </button>
+                </Button>
               </div>
             </div>
 
@@ -465,12 +462,9 @@ class VKLikesRemover extends PureComponent<
 
                 {likes.count > 0 && (
                   <div className="pull-right">
-                    <button
-                      type="button"
-                      onClick={this.removeAllLikes.bind(this, {})}
-                    >
+                    <Button onClick={this.removeAllLikes.bind(this, {})}>
                       Remove all
-                    </button>
+                    </Button>
                   </div>
                 )}
               </div>

@@ -10,6 +10,7 @@ import cn from 'classnames';
  */
 
 import CanteenList from './CanteenList';
+import { Button } from '@/components/common';
 
 /**
  * Typings
@@ -242,13 +243,13 @@ class CanteenSelector extends PureComponent<
             style={style}
             ref={this.$canvasRef}
           />
-          <button
+          <Button
             type="button"
             className="btn-spin"
             onClick={this.selectCanteen}
           >
             Spin
-          </button>
+          </Button>
         </div>
 
         <div className="chart-legend">

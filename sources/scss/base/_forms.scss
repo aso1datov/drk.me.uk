@@ -6,7 +6,7 @@ label {
   display: inline-block;
 }
 
-button {
+.button {
   padding: 0.125rem 0.5rem;
   border: 1px solid;
 
@@ -27,12 +27,11 @@ button {
   }
 
   &:disabled {
-    opacity: .8;
+    opacity: 0.8;
     pointer-events: none;
     cursor: not-allowed;
-    
-    @include themefy($themes) {
 
+    @include themefy($themes) {
     }
   }
 }

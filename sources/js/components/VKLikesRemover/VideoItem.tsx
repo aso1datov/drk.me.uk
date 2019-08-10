@@ -5,6 +5,12 @@
 import React from 'react';
 
 /**
+ * Components
+ */
+
+import { Button } from '@/components/common';
+
+/**
  * Typings
  */
 
@@ -30,9 +36,7 @@ const VideoItem: React.FC<IVKVideoProps> = ({
     </figure>
 
     <div className="videos-gallery-item-controls">
-      <button type="button" onClick={onRemove.bind(null, id, owner_id)}>
-        Remove
-      </button>
+      <Button onClick={onRemove.bind(null, id, owner_id)}>Remove</Button>
     </div>
   </div>
 );

@@ -5,6 +5,12 @@
 import React from 'react';
 
 /**
+ * Components
+ */
+
+import { Button } from '@/components/common';
+
+/**
  * Typings
  */
 
@@ -30,9 +36,7 @@ const PostItem: React.FC<IVKPostProps> = ({ id, owner_id, text, onRemove }) => {
         )}
       </td>
       <td className="text-right">
-        <button type="button" onClick={onRemove.bind(null, id, owner_id)}>
-          Remove
-        </button>
+        <Button onClick={onRemove.bind(null, id, owner_id)}>Remove</Button>
       </td>
     </tr>
   );

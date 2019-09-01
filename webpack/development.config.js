@@ -70,8 +70,7 @@ module.exports = () => {
             {
               loader: 'sass-loader',
               options: {
-                sourcecMap: true,
-                data: '$env: dev;',
+                prependData: '$env: dev;',
               },
             },
           ],

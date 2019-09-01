@@ -73,7 +73,7 @@ module.exports = () => {
             {
               loader: 'sass-loader',
               options: {
-                data: '$env: prod;',
+                prependData: '$env: prod;',
               },
             },
           ],

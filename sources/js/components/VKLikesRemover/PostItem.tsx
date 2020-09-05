@@ -2,7 +2,7 @@
  * Vendor
  */
 
-import React from 'react';
+import React, { useCallback } from 'react';
 
 /**
  * Components
@@ -14,15 +14,22 @@ import { Button } from '@/components/common';
  * Typings
  */
 
-import { IVKPost } from './interfaces';
-type IVKPostProps = IVKPost;
+import { VKPost } from './interfaces';
+
+type VKPostProps = VKPost & {
+  onRemove: (id: number, ownerId: number) => void;
+};
 
 /**
  * Expo
  */
 
-const PostItem: React.FC<IVKPostProps> = ({ id, owner_id, text, onRemove }) => {
+const PostItem: React.FC<VKPostProps> = ({ id, owner_id, text, onRemove }) => {
   const link = `https://vk.com/wall${owner_id}_${id}`;
+
+  const handleRemove = useCallback(() => {
+    onRemove(id, owner_id);
+  }, [id, owner_id]);
 
   return (
     <tr>
@@ -36,7 +43,7 @@ const PostItem: React.FC<IVKPostProps> = ({ id, owner_id, text, onRemove }) => {
         )}
       </td>
       <td className="text-right">
-        <Button onClick={onRemove.bind(null, id, owner_id)}>Remove</Button>
+        <Button onClick={handleRemove}>Remove</Button>
       </td>
     </tr>
   );

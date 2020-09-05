@@ -17,35 +17,31 @@ import Videos from './Videos';
  * Typings
  */
 
-import { IVKLikesRemoverLikesList } from './interfaces';
+import { VKLink, VKPhoto, VKPost, VKVideo, LikesTypes } from './interfaces';
 
-type IVKLikesRemoverLikesListProps = IVKLikesRemoverLikesList;
+type VKLikesRemoverLikesListProps = {
+  type: LikesTypes;
+  likes: VKPhoto[] | VKVideo[] | VKLink[] | VKPost[];
+  onRemove: (...args: any) => void;
+};
 
 /**
  * Expo
  */
 
-const LikesList: React.FC<IVKLikesRemoverLikesListProps> = ({
-  type,
-  likes,
-  onRemove,
-}) => {
+const LikesList: React.FC<VKLikesRemoverLikesListProps> = ({ type, likes = [], onRemove }) => {
   switch (type) {
     case 'photo':
-      return <Photos photos={likes} onRemove={onRemove} />;
+      return <Photos photos={likes as VKPhoto[]} onRemove={onRemove} />;
     case 'video':
-      return <Videos videos={likes} onRemove={onRemove} />;
+      return <Videos videos={likes as VKVideo[]} onRemove={onRemove} />;
     case 'link':
-      return <Links links={likes} onRemove={onRemove} />;
+      return <Links links={likes as VKLink[]} onRemove={onRemove} />;
     case 'post':
-      return <Posts posts={likes} onRemove={onRemove} />;
+      return <Posts posts={likes as VKPost[]} onRemove={onRemove} />;
     default:
       return null;
   }
-};
-
-LikesList.defaultProps = {
-  likes: [],
 };
 
 export default LikesList;

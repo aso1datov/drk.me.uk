@@ -1,4 +1,3 @@
-import { IPortfolioItem } from '@/reducers/portfolio/interfaces';
 
 export interface IHomePage {}
 

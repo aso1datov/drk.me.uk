@@ -28,7 +28,7 @@ import '../scss/styles.scss';
  * Typings
  */
 
-interface IApp {}
+type AppProps = {}
 
 /**
  * Expo
@@ -36,7 +36,7 @@ interface IApp {}
 
 const store = configureStore();
 
-const App: React.FC<IApp> = () => (
+const App: React.FC<AppProps> = () => (
   <Provider store={store}>
     <AppRouter />
   </Provider>

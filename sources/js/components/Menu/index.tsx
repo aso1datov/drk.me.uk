@@ -8,9 +8,11 @@ import React from 'react';
  * Typings
  */
 
-import { IMenu } from './interfaces';
+import { MenuItemProps } from './MenuItem';
 
-type IMenuProps = IMenu;
+type MenuProps = Readonly<{
+  navigation: ReadonlyArray<MenuItemProps>;
+}>;
 
 /**
  * Components
@@ -22,7 +24,7 @@ import MenuItem from './MenuItem';
  * Expo
  */
 
-const Menu: React.FC<IMenuProps> = ({ navigation }) => (
+const Menu: React.FC<MenuProps> = ({ navigation }) => (
   <ul className="navigation">
     {navigation.map(nav => (
       <MenuItem key={nav.to} {...nav} />

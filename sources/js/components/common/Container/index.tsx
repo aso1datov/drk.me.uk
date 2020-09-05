@@ -8,16 +8,12 @@ import React from 'react';
  * Typings
  */
 
-import { IContainer } from './interfaces';
-
-type IContainerProps = IContainer;
+type ContainerProps = {};
 
 /**
  * Expo
  */
 
-const Container: React.FC<IContainerProps> = ({ children }) => (
-  <div className="container">{children}</div>
-);
+const Container: React.FC<ContainerProps> = ({ children }) => <div className="container">{children}</div>;
 
 export default Container;

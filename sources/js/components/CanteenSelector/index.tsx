@@ -16,12 +16,7 @@ import { Button } from '@/components/common';
  * Typings
  */
 
-import {
-  ICanteenSelector,
-  ICanteenSelectorState,
-  IChartCoords,
-  ICustomVariables,
-} from './interfaces';
+import { ICanteenSelector, ICanteenSelectorState, IChartCoords, ICustomVariables } from './interfaces';
 
 type ICanteenSelectorProps = ICanteenSelector;
 
@@ -31,15 +26,12 @@ type ICanteenSelectorProps = ICanteenSelector;
 
 import { getRandomInt, radiansToDegrees } from '@/utils';
 
-class CanteenSelector extends PureComponent<
-  ICanteenSelector,
-  ICanteenSelectorState
-> {
-  public $canvasRef: React.RefObject<HTMLCanvasElement>;
-  public chart: HTMLCanvasElement;
-  public ctx: CanvasRenderingContext2D;
-  public slices: Array<{ [x: string]: number[] }>;
-  public timer: number;
+class CanteenSelector extends PureComponent<ICanteenSelector, ICanteenSelectorState> {
+  private $canvasRef: React.RefObject<HTMLCanvasElement>;
+  private chart: HTMLCanvasElement;
+  private ctx: CanvasRenderingContext2D;
+  private slices: Array<{ [x: string]: number[] }>;
+  private timer: number;
 
   public static defaultProps = {
     data: {},
@@ -91,10 +83,7 @@ class CanteenSelector extends PureComponent<
    * @return {number} Total
    */
   public get total(): number {
-    return Object.values(this.props.data).reduce(
-      (total, value) => total + value,
-      0
-    );
+    return Object.values(this.props.data).reduce((total, value) => total + value, 0);
   }
 
   /**
@@ -170,14 +159,7 @@ class CanteenSelector extends PureComponent<
         let sliceAngle = (2 * Math.PI * data[key]) / this.total;
         let endAngle = startAngle + sliceAngle;
 
-        this.drawPieSlice(
-          centerX,
-          centerY,
-          radius,
-          startAngle,
-          endAngle,
-          colors[color % colors.length]
-        );
+        this.drawPieSlice(centerX, centerY, radius, startAngle, endAngle, colors[color % colors.length]);
 
         this.slices.push({
           [key]: [radiansToDegrees(startAngle), radiansToDegrees(endAngle)],
@@ -189,14 +171,7 @@ class CanteenSelector extends PureComponent<
     }
 
     if (doughnutHoleSize) {
-      this.drawPieSlice(
-        centerX,
-        centerY,
-        doughnutHoleSize * radius,
-        0,
-        2 * Math.PI,
-        'white'
-      );
+      this.drawPieSlice(centerX, centerY, doughnutHoleSize * radius, 0, 2 * Math.PI, 'white');
     }
   }
 
@@ -215,7 +190,7 @@ class CanteenSelector extends PureComponent<
     clearTimeout(this.timer);
 
     this.timer = window.setTimeout(() => {
-      this.setState(() => ({ selected: this.findCanteen(point) }));
+      this.setState({ selected: this.findCanteen(point) });
     }, this.props.rotateDuration);
   };
 
@@ -238,16 +213,8 @@ class CanteenSelector extends PureComponent<
     return (
       <div className="canteen-selector">
         <div className="canteen-selector-wrapper">
-          <canvas
-            className={cn('canteens-chart', { rotate })}
-            style={style}
-            ref={this.$canvasRef}
-          />
-          <Button
-            type="button"
-            className="btn-spin"
-            onClick={this.selectCanteen}
-          >
+          <canvas className={cn('canteens-chart', { rotate })} style={style} ref={this.$canvasRef} />
+          <Button className="btn-spin" onClick={this.selectCanteen}>
             Spin
           </Button>
         </div>

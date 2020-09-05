@@ -11,20 +11,17 @@ import { Link } from 'react-router-dom';
  * Typings
  */
 
-import { ISection } from './inderfaces';
-
-type ISectionProps = ISection;
+type SectionProps = Readonly<{
+  title: string;
+  className?: string;
+  goBackTo?: string;
+}>;
 
 /**
  * Expo
  */
 
-const Section: React.FC<ISectionProps> = ({
-  title,
-  className,
-  goBackTo,
-  children,
-}) => (
+const Section: React.FC<SectionProps> = ({ title, className, goBackTo, children }) => (
   <section className={cn('section', className)} role="main">
     <Helmet>
       <title>{title}</title>

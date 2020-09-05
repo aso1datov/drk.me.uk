@@ -32,8 +32,7 @@ export const getRandomInt = (min: number, max: number): number => {
  * @param {number} radians
  * @returns {number} degrees
  */
-export const radiansToDegrees = (radians: number): number =>
-  (radians * 180) / Math.PI;
+export const radiansToDegrees = (radians: number): number => (radians * 180) / Math.PI;
 
 /**
  * Converts from degrees to radians.
@@ -41,15 +40,14 @@ export const radiansToDegrees = (radians: number): number =>
  * @param {number} degrees
  * @returns {number} radians
  */
-export const degreesToRadians = (degrees: number): number =>
-  (degrees * Math.PI) / 180;
+export const degreesToRadians = (degrees: number): number => (degrees * Math.PI) / 180;
 
 /**
  * Get arithmetic mean
  *
  * @returns {number} arithmetic mean
  */
-export const getArithmeticMean = function(...args: number[]): number {
+export const getArithmeticMean = function (...args: number[]): number {
   let sum = 0;
 
   for (let i = 0; i < arguments[i]; i++) {
@@ -66,5 +64,4 @@ export const getArithmeticMean = function(...args: number[]): number {
  * @returns {Promise<void>}
  */
 
-export const delay = (ms: number): Promise<void> =>
-  new Promise(resolve => setTimeout(resolve, ms));
+export const delay = (ms: number): Promise<void> => new Promise(resolve => setTimeout(resolve, ms));

@@ -3,8 +3,7 @@
  */
 
 import React from 'react';
-import { Router, Switch } from 'react-router-dom';
-import { createBrowserHistory } from 'history';
+import { BrowserRouter as Router, Switch } from 'react-router-dom';
 
 /**
  * Routes
@@ -31,17 +30,11 @@ import VKLikesRemoverPage from '@/pages/services/VKLikesRemoverPage';
 import CanteenSelectorPage from '@/pages/services/CanteenSelectorPage';
 
 /**
- * History
- */
-
-const history = createBrowserHistory();
-
-/**
  * Expo
  */
 
 const AppRouter = () => (
-  <Router history={history}>
+  <Router>
     <Layout>
       <Header />
       <Navbar />

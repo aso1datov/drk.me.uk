@@ -2,7 +2,7 @@
  * Vendor
  */
 
-import React from 'react';
+import React, { useCallback } from 'react';
 
 /**
  * Components
@@ -14,36 +14,29 @@ import { Button } from '@/components/common';
  * Typings
  */
 
-import { IVKPhoto } from './interfaces';
+import { VKPhoto } from './interfaces';
 
-type IVKPhotoProps = IVKPhoto;
+type VKPhotoProps = VKPhoto & {
+  onRemove: (id: number, ownerId: number) => void;
+};
 
 /**
  * Expo
  */
 
-const PhotoItem: React.FC<IVKPhotoProps> = ({
-  id,
-  owner_id,
-  sizes,
-  onRemove,
-}) => {
+const PhotoItem: React.FC<VKPhotoProps> = ({ id, owner_id, sizes, onRemove }) => {
   const photo = sizes.find(size => size.type === 'm');
+  const handleRemove = useCallback(() => {
+    onRemove(id, owner_id);
+  }, [id, owner_id]);
 
   return (
     <div className="photos-gallery-item">
       <figure>
-        {photo && (
-          <img
-            src={photo.url}
-            width={photo.width}
-            height={photo.height}
-            alt=""
-          />
-        )}
+        {photo && <img src={photo.url} width={photo.width} height={photo.height} alt="" />}
 
         <figcaption>
-          <Button onClick={onRemove.bind(null, id, owner_id)}>Remove</Button>
+          <Button onClick={handleRemove}>Remove</Button>
         </figcaption>
       </figure>
     </div>

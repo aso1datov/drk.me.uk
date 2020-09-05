@@ -13,15 +13,14 @@ import { Container } from '@/components/common';
 /**
  * Typings
  */
-import { ILayout } from './interfaces';
 
-type ILayoutProps = ILayout;
+type LayoutProps = {};
 
 /**
  * Expo
  */
 
-const Layout: React.FC<ILayoutProps> = ({ children }) => (
+const Layout: React.FC<LayoutProps> = ({ children }) => (
   <div className="layout">
     <Container>{children}</Container>
   </div>

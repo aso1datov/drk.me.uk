@@ -3,13 +3,16 @@
  */
 
 import { AnyAction, Reducer } from 'redux';
-import { IUserState } from './interfaces';
+
+export type UserState = Readonly<{
+  isAuthenticated: boolean;
+}>;
 
 /**
  * Inital state
  */
 
-const initialState: IUserState = {
+const initialState: UserState = {
   isAuthenticated: false,
 };
 
@@ -17,10 +20,7 @@ const initialState: IUserState = {
  * Expo
  */
 
-const reducer: Reducer<IUserState, AnyAction> = (
-  state = initialState,
-  action
-) => {
+const reducer: Reducer<UserState, AnyAction> = (state = initialState, action) => {
   switch (action.type) {
     default:
       return state;

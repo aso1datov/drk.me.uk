@@ -14,29 +14,22 @@ import PhotoItem from './PhotoItem';
  * Typings
  */
 
-import { IVKLikesRemoverPhotos } from './interfaces';
+import { VKPhoto } from './interfaces';
 
-type IVKLikesRemoverPhotosProps = IVKLikesRemoverPhotos;
+type IVKLikesRemoverPhotosProps = {
+  photos: ReadonlyArray<VKPhoto>;
+  onRemove: (id: number, ownerId: number) => void;
+};
 
 /**
  * Expo
  */
 
-const Photos: React.FC<IVKLikesRemoverPhotosProps> = ({ photos, onRemove }) => (
+const Photos: React.FC<IVKLikesRemoverPhotosProps> = ({ photos = [], onRemove }) => (
   <div className="photos-gallery">
     {photos.length > 0 &&
-      photos.map(photo => (
-        <PhotoItem
-          key={`${photo.id}_${photo.owner_id}`}
-          {...photo}
-          onRemove={onRemove}
-        />
-      ))}
+      photos.map(photo => <PhotoItem key={`${photo.id}_${photo.owner_id}`} {...photo} onRemove={onRemove} />)}
   </div>
 );
-
-Photos.defaultProps = {
-  photos: [],
-};
 
 export default Photos;

@@ -14,8 +14,7 @@ import Menu from '@/components/Menu';
  * Typings
  */
 
-import { INavigation } from './interfaces';
-type INavigationProps = INavigation;
+type NavigationProps = {};
 
 /**
  * Navigation config
@@ -27,7 +26,7 @@ import { navigation } from '@/config';
  * Expo
  */
 
-const Navigation: React.FC<INavigationProps> = () => (
+const Navigation: React.FC<NavigationProps> = () => (
   <nav role="navigation">
     <Menu navigation={navigation} />
   </nav>

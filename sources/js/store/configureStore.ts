@@ -15,8 +15,6 @@ import rootReducer from '@/reducers/rootReducer';
  * Expo
  */
 
-const composeEnhancers =
-  (<any>window).__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+const composeEnhancers = (<any>window).__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
-export default () =>
-  createStore(rootReducer, composeEnhancers(applyMiddleware(thunk)));
+export default () => createStore(rootReducer, composeEnhancers(applyMiddleware(thunk)));

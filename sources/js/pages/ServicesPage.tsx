@@ -34,11 +34,9 @@ const ServicesPage: React.FC<IServicesPageProps> = () => (
       <li>
         <Link to="/services/canteen-selector">Canteen selector</Link>
       </li>
-      {/* <li>
-        <Link to="/services/lorem-ipsum">
-          lorem ipsum generator (ivc edition)
-        </Link>
-      </li> */}
+      <li>
+        <Link to="/services/lorem-ipsum">lorem ipsum generator (ivc edition)</Link>
+      </li>
     </ul>
   </Section>
 );

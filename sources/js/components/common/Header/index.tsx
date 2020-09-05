@@ -8,15 +8,13 @@ import React from 'react';
  * Typings
  */
 
-import { IHeader } from './interfaces';
-
-type IHeaderProps = IHeader;
+type HeaderProps = {};
 
 /**
  * Expo
  */
 
-const Header: React.FC<IHeaderProps> = () => (
+const Header: React.FC<HeaderProps> = () => (
   <header className="site-header">
     <h1>**** DRK ****</h1>
   </header>

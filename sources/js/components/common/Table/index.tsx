@@ -9,26 +9,21 @@ import cn from 'classnames';
  * Typings
  */
 
-import { ITable } from './interfaces';
-type ITableProps = ITable;
+type TableProps = Readonly<{
+  className?: string;
+  bordered?: boolean;
+  responsive?: boolean | 'sm' | 'md' | 'lg' | 'xl';
+}>;
 
 /**
  * Expo
  */
 
-const Table: React.FC<ITableProps> = ({
-  className,
-  bordered,
-  responsive,
-  children,
-}) => {
+const Table: React.FC<TableProps> = ({ className, bordered, responsive, children }) => {
   const tableClasses = cn('table', className, { 'table-bordered': bordered });
 
   if (responsive) {
-    const responsiveClass =
-      typeof responsive === 'string'
-        ? `table-responsive-${responsive}`
-        : 'table-responsive';
+    const responsiveClass = typeof responsive === 'string' ? `table-responsive-${responsive}` : 'table-responsive';
 
     return (
       <div className={responsiveClass}>

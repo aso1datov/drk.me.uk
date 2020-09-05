@@ -7,15 +7,17 @@ import React, { Fragment } from 'react';
 /**
  * Typings
  */
-import { IPhrasesList } from './interfaces';
 
-type IPhrasesListProps = IPhrasesList;
+type PhrasesListProps = Readonly<{
+  type: 'paragraph' | 'list';
+  phrases: ReadonlyArray<String>;
+}>;
 
 /**
  * Expo
  */
 
-const PhrasesList: React.FC<IPhrasesListProps> = ({ type, phrases }) => {
+const PhrasesList: React.FC<PhrasesListProps> = ({ type, phrases }) => {
   switch (type) {
     case 'paragraph':
       return (

@@ -9,15 +9,17 @@ import { NavLink } from 'react-router-dom';
  * Typings
  */
 
-import { IMenuItem } from './interfaces';
-
-type IMenuItemProps = IMenuItem;
+export type MenuItemProps = Readonly<{
+  to: string;
+  title: string;
+  exact: boolean;
+}>;
 
 /**
  * Expo
  */
 
-const MenuItem: React.FC<IMenuItemProps> = ({ to, title, exact }) => (
+const MenuItem: React.FC<MenuItemProps> = ({ to, title, exact }) => (
   <li className="navigation-item">
     <NavLink to={to} activeClassName="is-active" exact={exact}>
       {title}

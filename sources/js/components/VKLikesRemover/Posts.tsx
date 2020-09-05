@@ -15,15 +15,18 @@ import PostItem from './PostItem';
  * Typings
  */
 
-import { IVKLikesRemoverPosts } from './interfaces';
+import { VKPost } from './interfaces';
 
-type IVKLikesRemoverPostsProps = IVKLikesRemoverPosts;
+type VKLikesRemoverPostsProps = {
+  posts: ReadonlyArray<VKPost>;
+  onRemove: (id: number, ownerId: number) => void;
+};
 
 /**
  * Expo
  */
 
-const Posts: React.FC<IVKLikesRemoverPostsProps> = ({ posts, onRemove }) => (
+const Posts: React.FC<VKLikesRemoverPostsProps> = ({ posts = [], onRemove }) => (
   <Table bordered={true} responsive="sm">
     <thead>
       <tr>
@@ -35,19 +38,11 @@ const Posts: React.FC<IVKLikesRemoverPostsProps> = ({ posts, onRemove }) => (
     {posts.length > 0 && (
       <tbody>
         {posts.map(post => (
-          <PostItem
-            key={`${post.id}${post.owner_id}`}
-            {...post}
-            onRemove={onRemove}
-          />
+          <PostItem key={`${post.id}${post.owner_id}`} {...post} onRemove={onRemove} />
         ))}
       </tbody>
     )}
   </Table>
 );
-
-Posts.defaultProps = {
-  posts: [],
-};
 
 export default Posts;

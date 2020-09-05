@@ -2,7 +2,7 @@
  * Vendor
  */
 
-import React from 'react';
+import React, { useCallback } from 'react';
 
 /**
  * Components
@@ -14,31 +14,33 @@ import { Button } from '@/components/common';
  * Typings
  */
 
-import { IVKVideo } from './interfaces';
+import { VKVideo } from './interfaces';
 
-type IVKVideoProps = IVKVideo;
+export type VKVideoProps = VKVideo & {
+  onRemove: (id: number, ownerId: number) => void;
+};
 
 /**
  * Expo
  */
 
-const VideoItem: React.FC<IVKVideoProps> = ({
-  id,
-  owner_id,
-  title,
-  photo_130,
-  onRemove,
-}) => (
-  <div className="videos-gallery-item">
-    <figure>
-      <img src={photo_130} width="130" alt={title} />
-      <figcaption>{title}</figcaption>
-    </figure>
+const VideoItem: React.FC<VKVideoProps> = ({ id, owner_id, title, photo_130, onRemove }) => {
+  const handleRemove = useCallback(() => {
+    onRemove(id, owner_id);
+  }, [id, owner_id]);
 
-    <div className="videos-gallery-item-controls">
-      <Button onClick={onRemove.bind(null, id, owner_id)}>Remove</Button>
+  return (
+    <div className="videos-gallery-item">
+      <figure>
+        <img src={photo_130} width="130" alt={title} />
+        <figcaption>{title}</figcaption>
+      </figure>
+
+      <div className="videos-gallery-item-controls">
+        <Button onClick={handleRemove}>Remove</Button>
+      </div>
     </div>
-  </div>
-);
+  );
+};
 
 export default VideoItem;

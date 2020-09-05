@@ -17,11 +17,7 @@ type ICanteenListProps = ICanteenList;
  * Expo
  */
 
-const CanteenList: React.FC<ICanteenListProps> = ({
-  canteens,
-  colors,
-  selected,
-}) => (
+const CanteenList: React.FC<ICanteenListProps> = ({ canteens = {}, colors = [], selected }) => (
   <ul className="canteens-list">
     {Object.keys(canteens).map((canteen, i) => (
       <li
@@ -34,10 +30,5 @@ const CanteenList: React.FC<ICanteenListProps> = ({
     ))}
   </ul>
 );
-
-CanteenList.defaultProps = {
-  canteens: {},
-  colors: [],
-};
 
 export default CanteenList;

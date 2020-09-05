@@ -15,15 +15,18 @@ import LinkItem from './LinkItem';
  * Typings
  */
 
-import { IVKLikesRemoverLinks } from './interfaces';
+import { VKLink } from './interfaces';
 
-type IVKLikesRemoverLinksProps = IVKLikesRemoverLinks;
+type IVKLikesRemoverLinksProps = {
+  links: ReadonlyArray<VKLink>;
+  onRemove: (id: string) => void;
+};
 
 /**
  * Expo
  */
 
-const Links: React.FC<IVKLikesRemoverLinksProps> = ({ links, onRemove }) => (
+const Links: React.FC<IVKLikesRemoverLinksProps> = ({ links = [], onRemove }) => (
   <Table responsive="md" bordered={true}>
     <thead>
       <tr>
@@ -41,9 +44,5 @@ const Links: React.FC<IVKLikesRemoverLinksProps> = ({ links, onRemove }) => (
     )}
   </Table>
 );
-
-Links.defaultProps = {
-  links: [],
-};
 
 export default Links;

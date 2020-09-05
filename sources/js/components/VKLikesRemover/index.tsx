@@ -21,9 +21,21 @@ import VK from '@/services/VK';
  * Typings
  */
 
-import { IVKLikesRemover, IVKLikesRemoverState } from './interfaces';
+import { VKPhoto, VKVideo, VKLink, VKPost, LikesTypes } from './interfaces';
 
-type IVKLikesRemoverProps = IVKLikesRemover;
+type VKLikesRemoverProps = {};
+
+type VKLikesRemoverState = {
+  isLoading: boolean;
+  token: string;
+  likes: {
+    type: LikesTypes | '';
+    items: VKPhoto[] | VKVideo[] | VKLink[] | VKPost[];
+    count: number;
+  };
+  request: Record<string, number>;
+  errors: any;
+};
 
 /**
  * Expo
@@ -36,13 +48,10 @@ const limits: { [key: string]: number } = {
   video: 1000,
 };
 
-class VKLikesRemover extends PureComponent<
-  IVKLikesRemoverProps,
-  IVKLikesRemoverState
-> {
+class VKLikesRemover extends PureComponent<VKLikesRemoverProps, VKLikesRemoverState> {
   private vk: VK;
 
-  constructor(props: IVKLikesRemoverProps) {
+  constructor(props: VKLikesRemoverProps) {
     super(props);
 
     this.state = {
@@ -74,9 +83,7 @@ class VKLikesRemover extends PureComponent<
   /**
    * Handle token change
    */
-  public handleTokenChange = ({
-    target,
-  }: React.ChangeEvent<HTMLInputElement>): void => {
+  public handleTokenChange = ({ target }: React.ChangeEvent<HTMLInputElement>): void => {
     this.setState(
       () => ({
         token: target.value,
@@ -91,16 +98,13 @@ class VKLikesRemover extends PureComponent<
   /**
    * Handle type change
    */
-  public handleTypeChange = ({
-    target,
-  }: React.ChangeEvent<HTMLSelectElement>): void => {
-    const type = target.value;
+  public handleTypeChange = ({ target }: React.ChangeEvent<HTMLSelectElement>): void => {
+    const type = target.value as VKLikesRemoverState['likes']['type'];
     const limit = limits[type] || 1000;
 
     this.setState(
-      prevState => ({
+      {
         likes: {
-          ...prevState.likes,
           type,
           items: [],
           count: 0,
@@ -110,24 +114,18 @@ class VKLikesRemover extends PureComponent<
           limit,
         },
         errors: {},
-      }),
-      () => {
-        this.getLikes();
-      }
+      },
+      this.getLikes
     );
   };
 
   /**
    * Handle request settings change
    */
-  public handleLimitsChange = ({
-    target,
-  }: React.ChangeEvent<HTMLInputElement>): void => {
+  public handleLimitsChange = ({ target }: React.ChangeEvent<HTMLInputElement>): void => {
     this.setState(prevState => {
       const { request } = prevState;
-      const value = !isNaN(+target.value)
-        ? Number(target.value)
-        : request[target.name];
+      const value = !isNaN(+target.value) ? Number(target.value) : request[target.name];
 
       return {
         request: {
@@ -140,8 +138,6 @@ class VKLikesRemover extends PureComponent<
 
   /**
    * Get API method name by type
-   *
-   * @returns {string} Method name
    */
   private getMethodName(): string {
     const { type } = this.state.likes;
@@ -160,9 +156,6 @@ class VKLikesRemover extends PureComponent<
 
   /**
    * Send request to get likes
-   *
-   * @param {string} [start_from]
-   * @returns {Promise<void>}
    */
 
   public getLikes = async (start_from?: string): Promise<void> => {
@@ -199,9 +192,6 @@ class VKLikesRemover extends PureComponent<
 
   /**
    * Solve captcha
-   *
-   * @param {string} url Captcha URL
-   * @returns {string} Captcha key
    */
 
   public handleCaptcha = (url: string): string => {
@@ -210,31 +200,28 @@ class VKLikesRemover extends PureComponent<
 
   /**
    * Handle click on remove button
-   *
-   * @param {string|number} id Item ID
-   * @param {number} [owner_id] Owner ID
-   *
-   * @returns {Promise<void>}
    */
 
-  public handleLikeRemove = async (
-    id: string | number,
-    owner_id?: number
-  ): Promise<void> => {
+  public handleLikeRemove = async (id: string | number, owner_id?: number): Promise<void> => {
     const { type } = this.state.likes;
 
     this.setState(() => ({ isLoading: true }));
 
-    const { response, error } = await this.removeLike(id, owner_id, type);
+    const { response, error } = await this.removeLike({ id, owner_id, type });
 
     if (error) {
       if (error.error_code === 14) {
         const captcha_key = this.handleCaptcha(error.captcha_img);
 
         if (captcha_key) {
-          this.removeLike(id, owner_id, type, {
-            captcha_key,
-            captcha_sid: error.captcha_sid,
+          this.removeLike({
+            id,
+            owner_id,
+            type,
+            extra: {
+              captcha_key,
+              captcha_sid: error.captcha_sid,
+            },
           });
         }
       } else {
@@ -251,9 +238,6 @@ class VKLikesRemover extends PureComponent<
 
   /**
    * Remove item from state
-   *
-   * @param {number|string} id Item id
-   * @param {function} [cb] Callback function
    */
 
   public removeItem = (id: number | string, cb?: () => any): void => {
@@ -262,6 +246,7 @@ class VKLikesRemover extends PureComponent<
         isLoading: false,
         likes: {
           ...prevState.likes,
+          //@ts-ignore
           items: prevState.likes.items.filter(item => item.id !== id),
           count: prevState.likes.count - 1,
         },
@@ -272,24 +257,19 @@ class VKLikesRemover extends PureComponent<
 
   /**
    * Send request to remove like
-   *
-   * @param {string|number} item_id Item ID
-   * @param {number} [owner_id] Item owner ID
-   * @param {string} type Item type
-   * @param {object} [extra] Extra payload
-   * @returns {Promise<any>} Promise represent request
    */
-  public removeLike = (
-    item_id: string | number,
-    owner_id: number,
-    type: string,
-    extra: object = {}
-  ): Promise<any> => {
+  public removeLike = (params: {
+    id: string | number;
+    type: string;
+    extra?: object;
+    owner_id?: number;
+  }): Promise<any> => {
+    const { extra = {}, id: item_id, ...rest } = params;
+
     const payload = {
       item_id,
-      owner_id,
-      type,
       ...extra,
+      ...rest,
     };
 
     return this.vk.sendRequest('likes.delete', payload);
@@ -297,49 +277,51 @@ class VKLikesRemover extends PureComponent<
 
   /**
    * Start remove all likes
-   *
-   * @param {object} [extra] Extra payload
    */
   public removeAllLikes = (extra: object = {}): void => {
     const { items = [], type } = this.state.likes;
     const [item] = items;
 
     if (!item || !type) {
-      this.setState(() => ({ isLoading: false }));
+      this.setState({ isLoading: false });
       return;
     }
 
-    this.setState(() => ({ isLoading: true }));
+    this.setState({ isLoading: true });
 
-    this.removeLike(item.id, item.owner_id, type, extra).then(
-      ({ response, error }) => {
-        this.setState(() => ({ isLoading: false }));
+    const params: any = {
+      type,
+      extra,
+      id: item.id,
+    };
 
-        if (error) {
-          if (error.error_code === 14) {
-            const captcha_key = this.handleCaptcha(error.captcha_img);
+    if ('owner_id' in item) {
+      params.owner_id = item.owner_id;
+    }
 
-            if (captcha_key) {
-              this.removeAllLikes({
-                captcha_key,
-                captcha_sid: error.captcha_sid,
-              });
-            }
-          } else if (error.error_code === 14) {
-            this.handleError({ likes: error.error_msg });
-            this.removeItem(item.id, () =>
-              window.setTimeout(this.removeAllLikes, 2000)
-            );
-          } else {
-            this.handleError({ likes: error.error_msg });
+    this.removeLike(params).then(({ response, error }) => {
+      this.setState({ isLoading: false });
+
+      if (error) {
+        if (error.error_code === 14) {
+          const captcha_key = this.handleCaptcha(error.captcha_img);
+
+          if (captcha_key) {
+            this.removeAllLikes({
+              captcha_key,
+              captcha_sid: error.captcha_sid,
+            });
           }
-        } else if (response && response.likes) {
-          this.removeItem(item.id, () =>
-            window.setTimeout(this.removeAllLikes, 2000)
-          );
+        } else if (error.error_code === 14) {
+          this.handleError({ likes: error.error_msg });
+          this.removeItem(item.id, () => window.setTimeout(this.removeAllLikes, 2000));
+        } else {
+          this.handleError({ likes: error.error_msg });
         }
+      } else if (response && response.likes) {
+        this.removeItem(item.id, () => window.setTimeout(this.removeAllLikes, 2000));
       }
-    );
+    });
   };
 
   /**
@@ -359,19 +341,13 @@ class VKLikesRemover extends PureComponent<
 
   public increaseOffset = (): void => {
     this.setState(
-      prevState => {
-        const { request } = prevState;
-
-        return {
-          request: {
-            ...request,
-            offset: request.offset + request.limit,
-          },
-        };
-      },
-      () => {
-        this.getLikes();
-      }
+      ({ request }) => ({
+        request: {
+          ...request,
+          offset: request.offset + request.limit,
+        },
+      }),
+      this.getLikes
     );
   };
 
@@ -462,20 +438,12 @@ class VKLikesRemover extends PureComponent<
 
                 {likes.count > 0 && (
                   <div className="pull-right">
-                    <Button onClick={this.removeAllLikes.bind(this, {})}>
-                      Remove all
-                    </Button>
+                    <Button onClick={this.removeAllLikes.bind(this, {})}>Remove all</Button>
                   </div>
                 )}
               </div>
 
-              {likes.type && (
-                <LikesList
-                  type={likes.type}
-                  likes={likes.items}
-                  onRemove={this.handleLikeRemove}
-                />
-              )}
+              {likes.type && <LikesList type={likes.type} likes={likes.items} onRemove={this.handleLikeRemove} />}
             </div>
           </Fragment>
         )}

@@ -1,12 +1,10 @@
 # This workflow will do a clean install of node dependencies, build the source code and run tests across different versions of node
 # For more information see: https://help.github.com/actions/language-and-framework-guides/using-nodejs-with-github-actions
 
-name: Node.js CI
+name: Deploy to server
 
 on:
   push:
-    branches: [ master ]
-  pull_request:
     branches: [ master ]
 
 jobs:
@@ -32,11 +30,11 @@ jobs:
     - run: npm ci
     - run: npm run build:prod
     - run: npm test --if-present
-    - name: Deploy to Staging server
+    - name: Deploy to server
       uses: easingthemes/ssh-deploy@v2.0.7
       env:
         SSH_PRIVATE_KEY: ${{ secrets.SERVER_SSH_KEY }}
-        ARGS: "-rltgoDzvO --delete --exclude ${{ secrets.REMOTE_TARGET }}/api"
+        ARGS: "-rltgoDzvO --delete"
         SOURCE: "build/"
         REMOTE_HOST: ${{ secrets.REMOTE_HOST }}
         REMOTE_USER: ${{ secrets.REMOTE_USER }}

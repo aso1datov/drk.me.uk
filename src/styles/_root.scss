@@ -1,0 +1,11 @@
+@import "./variables";
+
+:root {
+  @each $element, $value in $z-index {
+    --z-index-#{$element}: #{$value};
+  }
+
+  @each $size, $value in $icon-width {
+    --icon-#{$size}: #{$value};
+  }
+}

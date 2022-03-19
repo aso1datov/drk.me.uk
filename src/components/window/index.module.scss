@@ -1,0 +1,65 @@
+@import "src/styles/mixins";
+
+.container {
+  min-width: 250px;
+  background-color: silver;
+  padding: 0.125rem;
+  box-shadow: inset -1px -1px #0a0a0a, inset 1px 1px #dfdfdf,
+    inset -2px -2px grey, inset 2px 2px #fff;
+}
+
+.header {
+  background-image: linear-gradient(90deg, navy, #1084d0);
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: center;
+  justify-content: space-between;
+  padding: 4px 2px 4px 4px;
+}
+
+.title {
+  font-size: 1rem;
+  line-height: 1;
+  font-weight: 700;
+  margin: 0;
+  color: #fff;
+  margin-inline-end: 24px;
+  white-space: nowrap;
+}
+
+.controls {
+  display: flex;
+  gap: 2px;
+}
+
+.content {
+  display: flex;
+  flex-flow: column nowrap;
+  font-size: 1rem;
+  line-height: 1.5rem;
+  box-shadow: inset -1px -1px #fff, inset 1px 1px grey, inset -2px -2px #dfdfdf,
+    inset 2px 2px #0a0a0a;
+}
+
+.body {
+  margin: 0.5rem;
+}
+
+.button {
+  @include reset-button;
+  display: block;
+  width: 20px;
+  height: 18px;
+  background-color: silver;
+  color: #000;
+  font-size: 0.75rem;
+  line-height: 1;
+  box-shadow: inset -1px -1px #0a0a0a, inset 1px 1px #fff, inset -2px -2px grey,
+    inset 2px 2px #dfdfdf;
+}
+
+.close {
+  background-image: url("./assets/close.svg");
+  background-position: center;
+  background-repeat: no-repeat;
+}

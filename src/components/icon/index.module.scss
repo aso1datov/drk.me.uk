@@ -1,0 +1,66 @@
+.container {
+  display: flex;
+  flex-flow: column;
+  gap: 4px;
+  justify-content: center;
+  align-items: center;
+  margin: 0;
+  cursor: pointer;
+  user-select: none;
+  outline: none;
+
+  &:focus {
+    .label {
+      outline: 1px dotted #fff;
+
+      &::before {
+        content: "";
+      }
+    }
+  }
+}
+
+.image {
+  display: inline-flex;
+  align-items: flex-start;
+  justify-content: center;
+  height: 36px;
+  width: 36px;
+  flex-shrink: 0;
+}
+
+.label {
+  position: relative;
+  display: block;
+  padding: 0.125rem;
+  color: #fff;
+
+  &::before {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 2;
+    background-color: rgba(white, 0.15);
+    pointer-events: none;
+  }
+}
+
+.small {
+  width: var(--icon-small);
+  font-size: 0.875rem;
+  line-height: 1rem;
+}
+
+.medium {
+  width: var(--icon-medium);
+  font-size: 1rem;
+  line-height: 1.25rem;
+}
+
+.large {
+  width: var(--icon-large);
+  font-size: 1.25rem;
+  line-height: 1.5rem;
+}

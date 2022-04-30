@@ -24,8 +24,7 @@ export const DraggableWindow = forwardRef<HTMLDivElement, DraggableWindowProps>(
       [centered]
     );
 
-    const handleDrag = useCallback<DraggableProps["onDrag"]>((_, data) => {
-      const { x, y } = data;
+    const handleDrag = useCallback<DraggableProps["onDrag"]>((_, { x, y }) => {
       setPosition({ x, y });
     }, []);
 

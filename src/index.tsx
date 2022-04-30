@@ -1,6 +1,5 @@
-// eslint-disable-next-line simple-import-sort/imports
-import React from "react";
-import ReactDOM from "react-dom";
+/* eslint-disable simple-import-sort/imports */
+import { createRoot } from "react-dom/client";
 import { BrowserRouter } from "react-router-dom";
 
 import "./styles/styles.scss";
@@ -8,11 +7,10 @@ import { App } from "./app";
 
 import { ROOT_ELEMENT_ID } from "./constants";
 
-ReactDOM.render(
-  <React.StrictMode>
-    <BrowserRouter>
-      <App />
-    </BrowserRouter>
-  </React.StrictMode>,
-  document.getElementById(ROOT_ELEMENT_ID)
+// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+const root = createRoot(document.getElementById(ROOT_ELEMENT_ID)!);
+root.render(
+  <BrowserRouter>
+    <App />
+  </BrowserRouter>
 );

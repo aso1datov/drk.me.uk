@@ -8,5 +8,5 @@ type Props = {
 };
 
 export const Taskbar: FC<Props> = ({ className }) => {
-  return <aside className={clsx(className, styles.container)}>sadf</aside>;
+  return <aside className={clsx(className, styles.container)}></aside>;
 };

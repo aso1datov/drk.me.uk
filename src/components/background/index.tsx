@@ -50,7 +50,7 @@ export const Background = memo<Props>(({ className }) => {
       return;
     }
 
-    loader.load("bb2.gltf", (gltf) => {
+    loader.load("logo.gltf", (gltf) => {
       gltf.scene.scale.set(1.5, 1.5, 1.5);
       scene.add(gltf.scene);
 

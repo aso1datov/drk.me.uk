@@ -8,4 +8,3 @@ export const ROUTES = {
 };
 
 export const LOGO_COLOR = new Color(0xf72585);
-// export const LOGO_COLOR = new Color(0xf72585);

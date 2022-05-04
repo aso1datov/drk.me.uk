@@ -30,7 +30,7 @@ const camera = new PerspectiveCamera(
 const material = new MeshBasicMaterial({
   side: DoubleSide,
   transparent: true,
-  opacity: 0.65,
+  opacity: 0.6,
   color: LOGO_COLOR,
 });
 

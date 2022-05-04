@@ -1,10 +1,12 @@
 .container {
   position: relative;
-  background-color: #433baf;
+  background-image: linear-gradient(314deg,#560bad,#3f37c9);
+  background-size: 480% 480%;
   width: 100%;
   height: 100%;
   padding: 1rem;
   overflow: hidden;
+  animation: gradient-animation 60s ease infinite alternate;
 }
 
 .content {
@@ -25,4 +27,14 @@
   z-index: 0;
   user-select: none;
   pointer-events: none;
+}
+
+@keyframes gradient-animation {
+  0% {
+    background-position: 0% 50%;
+  }
+
+  100% {
+    background-position: 100% 50%;
+  }
 }

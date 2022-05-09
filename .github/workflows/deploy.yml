@@ -26,7 +26,7 @@ jobs:
         with:
           envkey_API_URL: "http://api.drk.me.uk"
           envkey_VK_APP_ID: ${{ secrets.VK_APP_ID }}
-      - run: yarn
+      - run: yarn install
       - run: yarn build
       - run: npm test --if-present
       - name: Deploy to server

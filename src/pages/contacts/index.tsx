@@ -1,8 +1,8 @@
-import { FC } from "react";
+import { FC, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 
 import { DraggableWindow } from "../../components/draggable-window";
-import { ROUTES } from "../../constants";
+import { MetricaTarget, ROUTES, YA_METRICA_COUNTER_ID } from "../../constants";
 
 export const Contacts: FC = () => {
   const navigate = useNavigate();
@@ -11,11 +11,20 @@ export const Contacts: FC = () => {
     navigate(ROUTES.home);
   };
 
+  const handleClick = useCallback((target: MetricaTarget) => {
+    window.ym(YA_METRICA_COUNTER_ID, "reachGoal", target);
+  }, []);
+
   return (
     <DraggableWindow title="Contacts" onClose={handleWindowClose}>
       <ul>
         <li>
-          <a href="https://github.com/aso1datov" target="_blank" rel="nofollow">
+          <a
+            href="https://github.com/aso1datov"
+            target="_blank"
+            rel="nofollow"
+            onClick={handleClick.bind(null, MetricaTarget.Github)}
+          >
             Github
           </a>
         </li>
@@ -25,6 +34,7 @@ export const Contacts: FC = () => {
             href="https://www.linkedin.com/in/aso1datov/"
             target="_blank"
             rel="nofollow"
+            onClick={handleClick.bind(null, MetricaTarget.LinkedIn)}
           >
             Linked.in
           </a>
@@ -35,6 +45,7 @@ export const Contacts: FC = () => {
             href="https://career.habr.com/aso1datov"
             target="_blank"
             rel="nofollow"
+            onClick={handleClick.bind(null, MetricaTarget.HabrCareer)}
           >
             Хабр Карьера
           </a>

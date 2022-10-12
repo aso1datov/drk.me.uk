@@ -1,6 +1,6 @@
 import { forwardRef, useCallback, useMemo, useRef, useState } from "react";
 import Draggable, { DraggableProps } from "react-draggable";
-import mergeRefs from "react-merge-refs";
+import { mergeRefs } from "react-merge-refs";
 import clsx from "clsx";
 
 import { Window, WindowProps } from "../window";
@@ -16,7 +16,7 @@ const DRAG_HANDLER_CLASSNAME = "header";
 
 export const DraggableWindow = forwardRef<HTMLDivElement, DraggableWindowProps>(
   ({ title, children, className, centered = true, onClose }, forwardedRef) => {
-    const nodeRef = useRef<HTMLDivElement>(null);
+    const nodeRef = useRef<HTMLDivElement | null>(null);
     const ref = mergeRefs([nodeRef, forwardedRef]);
     const [position, setPosition] = useState({ x: 0, y: 0 });
     const positionOffset = useMemo(

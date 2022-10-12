@@ -1,10 +1,10 @@
-import { DetailedHTMLProps, forwardRef, ReactNode } from "react";
+import { DetailedHTMLProps, forwardRef, ReactNode, HTMLAttributes } from "react";
 import clsx from "clsx";
 
 import styles from "./index.module.scss";
 
 type ContainerHTMLAttibutes = Pick<
-  DetailedHTMLProps<React.HTMLAttributes<HTMLElement>, HTMLElement>,
+  DetailedHTMLProps<HTMLAttributes<HTMLElement>, HTMLElement>,
   "onMouseDown" | "onMouseUp" | "onTouchEnd" | "onTouchStart" | "style"
 >;
 

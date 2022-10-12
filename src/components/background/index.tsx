@@ -54,7 +54,7 @@ function animate(mesh: Mesh) {
 }
 
 export const Background = memo<Props>(({ className }) => {
-  const containerRef = useRef<HTMLDivElement>(null);
+  const containerRef = useRef<HTMLDivElement | null>(null);
 
   const setup = useCallback((init?: boolean) => {
     if (containerRef.current === null) {

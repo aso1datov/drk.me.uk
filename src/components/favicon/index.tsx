@@ -4,7 +4,7 @@ import { useDidMount } from "rooks";
 import { getRandomInteger } from "../../utils/get-random-integer";
 
 export const Favicon = () => {
-  const canvasRef = useRef<HTMLCanvasElement>(null);
+  const canvasRef = useRef<HTMLCanvasElement | null>(null);
 
   useDidMount(() => {
     const favicon = document.getElementById("favicon") as HTMLLinkElement;

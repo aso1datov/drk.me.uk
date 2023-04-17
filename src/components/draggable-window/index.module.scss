@@ -1,9 +1,6 @@
 .window {
   position: absolute;
+  top: 0;
+  left: 0;
   z-index: var(--z-index-window);
-}
-
-.centered {
-  top: 20%;
-  left: 50%;
 }

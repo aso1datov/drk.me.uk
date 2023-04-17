@@ -46,6 +46,7 @@
 }
 
 .button {
+  position: relative;
   @include reset-button;
   display: block;
   width: 20px;

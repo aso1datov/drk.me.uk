@@ -3898,6 +3898,7 @@ __metadata:
     normalize.css: ^8.0.1
     prettier: 2.8.7
     react: 18.2.0
+    react-device-detect: ^2.2.3
     react-dom: 18.2.0
     react-draggable: 4.4.5
     react-merge-refs: 2.0.1
@@ -4406,6 +4407,18 @@ __metadata:
   dependencies:
     performance-now: ^2.1.0
   checksum: 50ba284e481c8185dbcf45fc4618ba3aec580bb50c9121385d5698cb6012fe516d2015b1df6dd407a7b7c58d44be8086108236affbce1861edd6b44637c8cd52
+  languageName: node
+  linkType: hard
+
+"react-device-detect@npm:^2.2.3":
+  version: 2.2.3
+  resolution: "react-device-detect@npm:2.2.3"
+  dependencies:
+    ua-parser-js: ^1.0.33
+  peerDependencies:
+    react: ">= 0.14.0"
+    react-dom: ">= 0.14.0"
+  checksum: 42d9b3182b9d2495bf0d7914c9f370da51d8bdb853a3eba2acaf433894ae760386a075ba103185be825b33d42f50d85ef462087f261656d433f4c74dab23861f
   languageName: node
   linkType: hard
 
@@ -5403,6 +5416,13 @@ __metadata:
     tsc: bin/tsc
     tsserver: bin/tsserver
   checksum: 6a1fe9a77bb9c5176ead919cc4a1499ee63e46b4e05bf667079f11bf3a8f7887f135aa72460a4c3b016e6e6bb65a822cb8689a6d86cbfe92d22cc9f501f09213
+  languageName: node
+  linkType: hard
+
+"ua-parser-js@npm:^1.0.33":
+  version: 1.0.35
+  resolution: "ua-parser-js@npm:1.0.35"
+  checksum: 02370d38a0c8b586f2503d1c3bbba5cbc0b97d407282f9023201a99e4c03eae4357a2800fdf50cf80d73ec25c0b0cc5bfbaa03975b0add4043d6e4c86712c9c1
   languageName: node
   linkType: hard
 

@@ -1,4 +1,5 @@
-import { FC, KeyboardEventHandler, ReactNode, useCallback } from "react";
+import { FC, ReactNode } from "react";
+import { isMobile } from "react-device-detect";
 import { useNavigate } from "react-router-dom";
 import clsx from "clsx";
 
@@ -21,26 +22,28 @@ export const Icon: FC<Props> = ({
 }) => {
   const navigate = useNavigate();
 
-  const handleDoubleClick = useCallback(() => {
+  const goToPage = () => {
     navigate(to);
-  }, [to, navigate]);
+  };
 
-  const handleKeyDown = useCallback<KeyboardEventHandler<HTMLDivElement>>(
-    (event) => {
-      if (event.key === "Enter") {
-        handleDoubleClick();
-      }
-    },
-    [handleDoubleClick]
-  );
+  const handleKeyDown = (event: React.KeyboardEvent) => {
+    if (event.key === "Enter") {
+      goToPage();
+    }
+  };
+
+  const handlers = isMobile
+    ? { onClick: goToPage }
+    : { onDoubleClick: goToPage, onKeyDown: handleKeyDown };
+
+  console.log(isMobile);
 
   return (
     <div
       role="button"
       className={clsx(className, styles.container, styles[size])}
-      onDoubleClick={handleDoubleClick}
-      onKeyDown={handleKeyDown}
       tabIndex={0}
+      {...handlers}
     >
       <span className={styles.image} aria-hidden="true">
         {image}

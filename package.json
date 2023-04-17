@@ -11,6 +11,7 @@
     "clsx": "1.2.1",
     "normalize.css": "^8.0.1",
     "react": "18.2.0",
+    "react-device-detect": "^2.2.3",
     "react-dom": "18.2.0",
     "react-draggable": "4.4.5",
     "react-merge-refs": "2.0.1",

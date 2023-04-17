@@ -8,7 +8,7 @@ import { Layout } from "./components/layout";
 import { Taskbar } from "./components/taskbar";
 import { ReactComponent as UserIcon } from "./images/user.svg";
 import { Contacts } from "./pages/contacts";
-import { AppRoute } from "./constants";
+import { AppRoute } from "./routes";
 
 import styles from "./app.module.scss";
 

@@ -1,4 +1,4 @@
-import { FC, ReactNode } from "react";
+import type { FC, ReactNode } from "react";
 import { isMobile } from "react-device-detect";
 import { useNavigate } from "react-router-dom";
 import clsx from "clsx";
@@ -35,8 +35,6 @@ export const Icon: FC<Props> = ({
   const handlers = isMobile
     ? { onClick: goToPage }
     : { onDoubleClick: goToPage, onKeyDown: handleKeyDown };
-
-  console.log(isMobile);
 
   return (
     <div

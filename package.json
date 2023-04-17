@@ -9,9 +9,9 @@
   },
   "dependencies": {
     "clsx": "1.2.1",
-    "normalize.css": "^8.0.1",
+    "normalize.css": "8.0.1",
     "react": "18.2.0",
-    "react-device-detect": "^2.2.3",
+    "react-device-detect": "2.2.3",
     "react-dom": "18.2.0",
     "react-draggable": "4.4.5",
     "react-merge-refs": "2.0.1",
@@ -20,7 +20,6 @@
     "three": "0.151.3"
   },
   "devDependencies": {
-    "@types/lodash": "4.14.194",
     "@types/react": "18.0.35",
     "@types/react-dom": "18.0.11",
     "@types/three": "0.150.1",
@@ -28,11 +27,10 @@
     "@typescript-eslint/parser": "5.58.0",
     "@vitejs/plugin-react": "3.1.0",
     "eslint": "8.38.0",
-    "eslint-config-airbnb": "^19.0.4",
+    "eslint-config-airbnb": "19.0.4",
     "eslint-config-airbnb-typescript": "17.0.0",
     "eslint-config-prettier": "8.8.0",
-    "eslint-plugin-cypress": "2.13.2",
-    "eslint-plugin-dirnames": "^1.0.3",
+    "eslint-plugin-dirnames": "1.0.3",
     "eslint-plugin-import": "2.27.5",
     "eslint-plugin-prettier": "4.2.1",
     "eslint-plugin-react": "7.32.2",

@@ -8,7 +8,7 @@ import { Layout } from "./components/layout";
 import { Taskbar } from "./components/taskbar";
 import { ReactComponent as UserIcon } from "./images/user.svg";
 import { Contacts } from "./pages/contacts";
-import { ROUTES } from "./constants";
+import { AppRoute } from "./constants";
 
 import styles from "./app.module.scss";
 
@@ -16,11 +16,11 @@ export const App: FC = () => (
   <>
     <Layout>
       <Desktop className={styles.desktop}>
-        <Icon label="Contacts" image={<UserIcon />} to={ROUTES.contacts} />
+        <Icon label="Contacts" image={<UserIcon />} to={AppRoute.Contacts} />
 
         <Routes>
-          <Route path={ROUTES.home} element={<></>} />
-          <Route path={ROUTES.contacts} element={<Contacts />} />
+          <Route path={AppRoute.Home} element={<></>} />
+          <Route path={AppRoute.Contacts} element={<Contacts />} />
         </Routes>
       </Desktop>
       <Taskbar className={styles.taskbar} />

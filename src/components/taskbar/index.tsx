@@ -7,6 +7,6 @@ type Props = {
   className?: string;
 };
 
-export const Taskbar: FC<Props> = ({ className }) => {
-  return <aside className={clsx(className, styles.container)}></aside>;
-};
+export const Taskbar: FC<Props> = ({ className }) => (
+  <aside className={clsx(className, styles.container)} />
+);

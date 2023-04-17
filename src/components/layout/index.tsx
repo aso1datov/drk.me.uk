@@ -6,6 +6,6 @@ type Props = {
   children?: ReactNode;
 };
 
-export const Layout: FC<Props> = ({ children }) => {
-  return <div className={styles.container}>{children}</div>;
-};
+export const Layout: FC<Props> = ({ children }) => (
+  <div className={styles.container}>{children}</div>
+);

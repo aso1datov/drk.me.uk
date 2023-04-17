@@ -2,11 +2,8 @@ import { FC, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 
 import { DraggableWindow } from "../../components/draggable-window";
-import {
-  AppRoute,
-  MetricaTarget,
-  YA_METRICA_COUNTER_ID,
-} from "../../constants";
+import { MetricaTarget, YA_METRICA_COUNTER_ID } from "../../constants/metrica";
+import { AppRoute } from "../../routes";
 
 export const Contacts: FC = () => {
   const navigate = useNavigate();

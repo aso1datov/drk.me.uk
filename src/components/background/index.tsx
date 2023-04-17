@@ -11,7 +11,7 @@ import {
 import { DRACOLoader } from "three/examples/jsm/loaders/DRACOLoader";
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
 
-import { LOGO_COLOR } from "../../constants";
+import { LOGO_COLOR } from "../../constants/app";
 
 import styles from "./index.module.scss";
 
@@ -103,6 +103,10 @@ export const Background = memo<Props>(({ className }) => {
   }, [onWindowResize, render]);
 
   return (
-    <div ref={containerRef} className={clsx(className, styles.container)} />
+    <div
+      ref={containerRef}
+      className={clsx(className, styles.container)}
+      aria-hidden={true}
+    />
   );
 });

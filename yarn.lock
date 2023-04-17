@@ -900,13 +900,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/lodash@npm:4.14.194":
-  version: 4.14.194
-  resolution: "@types/lodash@npm:4.14.194"
-  checksum: 113f34831c461469d91feca2dde737f88487732898b4d25e9eb23b087bb193985f864d1e1e0f3b777edc5022e460443588b6000a3b2348c966f72d17eedc35ea
-  languageName: node
-  linkType: hard
-
 "@types/minimist@npm:^1.2.0":
   version: 1.2.2
   resolution: "@types/minimist@npm:1.2.2"
@@ -2144,7 +2137,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"eslint-config-airbnb@npm:^19.0.4":
+"eslint-config-airbnb@npm:19.0.4":
   version: 19.0.4
   resolution: "eslint-config-airbnb@npm:19.0.4"
   dependencies:
@@ -2195,18 +2188,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"eslint-plugin-cypress@npm:2.13.2":
-  version: 2.13.2
-  resolution: "eslint-plugin-cypress@npm:2.13.2"
-  dependencies:
-    globals: ^11.12.0
-  peerDependencies:
-    eslint: ">= 3.2.1"
-  checksum: 81cc425cfced563cf50ad2553f887e20a39fe179275e95408c53989bcf8f65f0fac648b429d006130c84221edf99eada663a2c6419eb837bf81ece3d18998cf5
-  languageName: node
-  linkType: hard
-
-"eslint-plugin-dirnames@npm:^1.0.3":
+"eslint-plugin-dirnames@npm:1.0.3":
   version: 1.0.3
   resolution: "eslint-plugin-dirnames@npm:1.0.3"
   dependencies:
@@ -2799,7 +2781,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"globals@npm:^11.1.0, globals@npm:^11.12.0":
+"globals@npm:^11.1.0":
   version: 11.12.0
   resolution: "globals@npm:11.12.0"
   checksum: 67051a45eca3db904aee189dfc7cd53c20c7d881679c93f6146ddd4c9f4ab2268e68a919df740d39c71f4445d2b38ee360fc234428baea1dbdfe68bbcb46979e
@@ -3875,7 +3857,6 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "new-site@workspace:."
   dependencies:
-    "@types/lodash": 4.14.194
     "@types/react": 18.0.35
     "@types/react-dom": 18.0.11
     "@types/three": 0.150.1
@@ -3884,21 +3865,20 @@ __metadata:
     "@vitejs/plugin-react": 3.1.0
     clsx: 1.2.1
     eslint: 8.38.0
-    eslint-config-airbnb: ^19.0.4
+    eslint-config-airbnb: 19.0.4
     eslint-config-airbnb-typescript: 17.0.0
     eslint-config-prettier: 8.8.0
-    eslint-plugin-cypress: 2.13.2
-    eslint-plugin-dirnames: ^1.0.3
+    eslint-plugin-dirnames: 1.0.3
     eslint-plugin-import: 2.27.5
     eslint-plugin-prettier: 4.2.1
     eslint-plugin-react: 7.32.2
     eslint-plugin-react-hooks: 4.6.0
     eslint-plugin-simple-import-sort: 10.0.0
     eslint-plugin-unicorn: 46.0.0
-    normalize.css: ^8.0.1
+    normalize.css: 8.0.1
     prettier: 2.8.7
     react: 18.2.0
-    react-device-detect: ^2.2.3
+    react-device-detect: 2.2.3
     react-dom: 18.2.0
     react-draggable: 4.4.5
     react-merge-refs: 2.0.1
@@ -3983,7 +3963,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"normalize.css@npm:^8.0.1":
+"normalize.css@npm:8.0.1":
   version: 8.0.1
   resolution: "normalize.css@npm:8.0.1"
   checksum: 4698cae88ec35e3f3e82f9f9402e6ffb906c27ccd6373cad88e6b3f5634fc7a043cb38702472299e5edb73825cf8b18d5fd9283f58829eddda79ea97453049a2
@@ -4410,7 +4390,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-device-detect@npm:^2.2.3":
+"react-device-detect@npm:2.2.3":
   version: 2.2.3
   resolution: "react-device-detect@npm:2.2.3"
   dependencies:

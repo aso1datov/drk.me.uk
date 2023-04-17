@@ -1,31 +1,43 @@
-import { forwardRef, useCallback, useMemo, useRef, useState } from "react";
+import {
+  forwardRef,
+  useCallback,
+  useLayoutEffect,
+  useRef,
+  useState,
+} from "react";
+import { isMobile } from "react-device-detect";
 import Draggable, { DraggableProps } from "react-draggable";
 import { mergeRefs } from "react-merge-refs";
 import clsx from "clsx";
 
 import { Window, WindowProps } from "../window";
 
+import { getInitialWindowPosition } from "./helpers";
+
 import styles from "./index.module.scss";
 
 export type DraggableWindowProps = WindowProps & {
   className?: string;
-  centered?: boolean;
 };
 
 const DRAG_HANDLER_CLASSNAME = "header";
 
 export const DraggableWindow = forwardRef<HTMLDivElement, DraggableWindowProps>(
-  ({ title, children, className, centered = true, onClose }, forwardedRef) => {
+  ({ title, children, className, onClose }, forwardedRef) => {
     const nodeRef = useRef<HTMLDivElement | null>(null);
     const ref = mergeRefs([nodeRef, forwardedRef]);
     const [position, setPosition] = useState({ x: 0, y: 0 });
-    const positionOffset = useMemo(
-      () => ({ x: centered ? "-50%" : 0, y: centered ? "-50%" : 0 }),
-      [centered]
-    );
 
     const handleDrag = useCallback<DraggableProps["onDrag"]>((_, { x, y }) => {
       setPosition({ x, y });
+    }, []);
+
+    useLayoutEffect(() => {
+      if (nodeRef.current !== null) {
+        const initialPosition = getInitialWindowPosition(nodeRef.current);
+
+        setPosition(initialPosition);
+      }
     }, []);
 
     return (
@@ -36,15 +48,13 @@ export const DraggableWindow = forwardRef<HTMLDivElement, DraggableWindowProps>(
         position={position}
         onDrag={handleDrag}
         onStop={handleDrag}
-        positionOffset={positionOffset}
+        disabled={isMobile}
       >
         <Window
           ref={ref}
           title={title}
           headerClassName={DRAG_HANDLER_CLASSNAME}
-          className={clsx(className, styles.window, {
-            [styles.centered]: centered,
-          })}
+          className={clsx(className, styles.window)}
           onClose={onClose}
         >
           {children}

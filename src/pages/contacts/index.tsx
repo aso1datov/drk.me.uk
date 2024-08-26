@@ -1,4 +1,4 @@
-import { FC, useCallback } from "react";
+import { type FC, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 
 import { DraggableWindow } from "../../components/draggable-window";

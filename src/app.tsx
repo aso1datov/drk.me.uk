@@ -1,4 +1,4 @@
-import { FC } from "react";
+import type { FC } from "react";
 import { Route, Routes } from "react-router-dom";
 
 import { Desktop } from "./components/desktop";
@@ -6,7 +6,7 @@ import { Favicon } from "./components/favicon";
 import { Icon } from "./components/icon";
 import { Layout } from "./components/layout";
 import { Taskbar } from "./components/taskbar";
-import { ReactComponent as UserIcon } from "./images/user.svg";
+import UserIcon from "./images/user.svg?react";
 import { Contacts } from "./pages/contacts";
 import { AppRoute } from "./routes";
 

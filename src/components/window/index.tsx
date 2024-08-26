@@ -1,8 +1,8 @@
 import {
-  DetailedHTMLProps,
+  type DetailedHTMLProps,
   forwardRef,
-  HTMLAttributes,
-  ReactNode,
+  type HTMLAttributes,
+  type ReactNode,
 } from "react";
 import clsx from "clsx";
 

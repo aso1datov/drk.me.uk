@@ -6,7 +6,7 @@ import {
   useState,
 } from "react";
 import { isMobile } from "react-device-detect";
-import Draggable, { DraggableProps } from "react-draggable";
+import Draggable, { type DraggableProps } from "react-draggable";
 import { mergeRefs } from "react-merge-refs";
 import clsx from "clsx";
 

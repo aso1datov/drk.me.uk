@@ -1,5 +1,5 @@
 import type { FC } from "react";
-import clsx from "clsx";
+import cc from "classcat";
 
 import styles from "./index.module.scss";
 
@@ -8,5 +8,5 @@ type Props = {
 };
 
 export const Taskbar: FC<Props> = ({ className }) => (
-  <aside className={clsx(className, styles.container)} />
+  <aside className={cc([className, styles.container])} />
 );

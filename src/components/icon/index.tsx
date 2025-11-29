@@ -1,7 +1,7 @@
 import type { FC, ReactNode } from "react";
 import { isMobile } from "react-device-detect";
-import { useNavigate } from "react-router-dom";
-import clsx from "clsx";
+import { useNavigate } from "react-router";
+import cc from "classcat";
 
 import styles from "./index.module.scss";
 
@@ -39,7 +39,7 @@ export const Icon: FC<Props> = ({
   return (
     <div
       role="button"
-      className={clsx(className, styles.container, styles[size])}
+      className={cc([className, styles.container, styles[size]])}
       tabIndex={0}
       {...handlers}
     >

@@ -1,5 +1,5 @@
 import type { FC, ReactNode } from "react";
-import clsx from "clsx";
+import cc from "classcat";
 
 import { Background } from "../background";
 
@@ -11,7 +11,7 @@ type Props = {
 };
 
 export const Desktop: FC<Props> = ({ className, children }) => (
-  <section className={clsx(className, styles.container)}>
+  <section className={cc([className, styles.container])}>
     <div className={styles.content}>{children}</div>
 
     <Background className={styles.background} />

@@ -1,11 +1,14 @@
-@import "src/styles/mixins";
+@use "../../styles/mixins";
 
 .container {
   min-width: 250px;
   background-color: silver;
   padding: 0.125rem;
-  box-shadow: inset -1px -1px #0a0a0a, inset 1px 1px #dfdfdf,
-    inset -2px -2px grey, inset 2px 2px #fff;
+  box-shadow:
+    inset -1px -1px #0a0a0a,
+    inset 1px 1px #dfdfdf,
+    inset -2px -2px grey,
+    inset 2px 2px #fff;
 }
 
 .header {
@@ -37,7 +40,10 @@
   flex-flow: column nowrap;
   font-size: 1rem;
   line-height: 1.5rem;
-  box-shadow: inset -1px -1px #fff, inset 1px 1px grey, inset -2px -2px #dfdfdf,
+  box-shadow:
+    inset -1px -1px #fff,
+    inset 1px 1px grey,
+    inset -2px -2px #dfdfdf,
     inset 2px 2px #0a0a0a;
 }
 
@@ -47,7 +53,7 @@
 
 .button {
   position: relative;
-  @include reset-button;
+  @include mixins.reset-button;
   display: block;
   width: 20px;
   height: 18px;
@@ -55,7 +61,10 @@
   color: #000;
   font-size: 0.75rem;
   line-height: 1;
-  box-shadow: inset -1px -1px #0a0a0a, inset 1px 1px #fff, inset -2px -2px grey,
+  box-shadow:
+    inset -1px -1px #0a0a0a,
+    inset 1px 1px #fff,
+    inset -2px -2px grey,
     inset 2px 2px #dfdfdf;
 }
 

@@ -4,7 +4,7 @@ import {
   type HTMLAttributes,
   type ReactNode,
 } from "react";
-import clsx from "clsx";
+import cc from "classcat";
 
 import styles from "./index.module.scss";
 
@@ -39,7 +39,7 @@ export const Window = forwardRef<HTMLElement, WindowProps>(
   ) => (
     <section
       ref={forwardedRef}
-      className={clsx(className, styles.container)}
+      className={cc([className, styles.container])}
       style={style}
       onMouseDown={onMouseDown}
       onMouseUp={onMouseUp}
@@ -48,13 +48,13 @@ export const Window = forwardRef<HTMLElement, WindowProps>(
       role="dialog"
       aria-modal="true"
     >
-      <header className={clsx(headerClassName, styles.header)}>
+      <header className={cc([headerClassName, styles.header])}>
         <h2 className={styles.title}>{title}</h2>
 
         <div className={styles.controls}>
           <button
             type="button"
-            className={clsx(styles.button, styles.close)}
+            className={cc([styles.button, styles.close])}
             onClick={onClose}
             title="Close"
           />

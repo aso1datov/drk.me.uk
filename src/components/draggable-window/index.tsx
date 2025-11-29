@@ -8,7 +8,7 @@ import {
 import { isMobile } from "react-device-detect";
 import Draggable, { type DraggableProps } from "react-draggable";
 import { mergeRefs } from "react-merge-refs";
-import clsx from "clsx";
+import cc from "classcat";
 
 import { Window, WindowProps } from "../window";
 
@@ -54,7 +54,7 @@ export const DraggableWindow = forwardRef<HTMLDivElement, DraggableWindowProps>(
           ref={ref}
           title={title}
           headerClassName={DRAG_HANDLER_CLASSNAME}
-          className={clsx(className, styles.window)}
+          className={cc([className, styles.window])}
           onClose={onClose}
         >
           {children}

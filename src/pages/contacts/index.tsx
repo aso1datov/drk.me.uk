@@ -1,5 +1,5 @@
 import { type FC, useCallback } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router";
 
 import { DraggableWindow } from "../../components/draggable-window";
 import { MetricaTarget, YA_METRICA_COUNTER_ID } from "../../constants/metrica";

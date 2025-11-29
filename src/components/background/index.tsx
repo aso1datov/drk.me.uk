@@ -1,5 +1,5 @@
 import { memo, useCallback, useEffect, useRef } from "react";
-import clsx from "clsx";
+import cc from "classcat";
 import {
   DoubleSide,
   Mesh,
@@ -8,8 +8,8 @@ import {
   Scene,
   WebGLRenderer,
 } from "three";
-import { DRACOLoader } from "three/examples/jsm/loaders/DRACOLoader";
-import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
+import { DRACOLoader } from "three/addons/loaders/DRACOLoader.js";
+import { GLTFLoader } from "three/addons/loaders/GLTFLoader.js";
 
 import { LOGO_COLOR } from "../../constants/app";
 
@@ -39,9 +39,9 @@ const renderer = new WebGLRenderer({
 });
 
 const dracoLoader = new DRACOLoader();
-dracoLoader
-  .setDecoderConfig({ type: "js" })
-  .setDecoderPath("https://www.gstatic.com/draco/v1/decoders/");
+dracoLoader.setDecoderPath(
+  "https://www.gstatic.com/draco/versioned/decoders/1.5.7/"
+);
 
 const loader = new GLTFLoader();
 loader.setPath("/models/").setDRACOLoader(dracoLoader);
@@ -105,7 +105,7 @@ export const Background = memo<Props>(({ className }) => {
   return (
     <div
       ref={containerRef}
-      className={clsx(className, styles.container)}
+      className={cc([className, styles.container])}
       aria-hidden={true}
     />
   );

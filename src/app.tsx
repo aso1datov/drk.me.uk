@@ -1,5 +1,5 @@
 import type { FC } from "react";
-import { Route, Routes } from "react-router-dom";
+import { Route, Routes } from "react-router";
 
 import { Desktop } from "./components/desktop";
 import { Favicon } from "./components/favicon";
@@ -19,7 +19,7 @@ export const App: FC = () => (
         <Icon label="Contacts" image={<UserIcon />} to={AppRoute.Contacts} />
 
         <Routes>
-          <Route path={AppRoute.Home} element={<></>} />
+          <Route index element={<></>} />
           <Route path={AppRoute.Contacts} element={<Contacts />} />
         </Routes>
       </Desktop>

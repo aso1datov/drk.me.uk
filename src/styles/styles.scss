@@ -1,3 +1,5 @@
+@use "sass:meta";
+@use "root";
+
 @import "normalize.css";
-@import "./root";
-@import "./base";
+@include meta.load-css("base");

@@ -1,0 +1,20 @@
+@use "sass:meta";
+@use "root";
+
+@import "normalize.css";
+@include meta.load-css("base");
+
+.layout {
+  display: grid;
+  grid-template-areas: "desktop" "taskbar";
+  grid-template-rows: 1fr auto;
+  height: 100%;
+}
+
+.desktop {
+  grid-area: desktop;
+}
+
+.taskbar {
+  grid-area: taskbar;
+}

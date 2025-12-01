@@ -1,0 +1,139 @@
+.container {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 20px;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  line-height: 1.6;
+  overflow: auto;
+  grid-area: desktop;
+}
+
+.debugSection {
+  background: #e3f2fd;
+  border: 2px solid #2196f3;
+  padding: 20px;
+  margin: 20px 0;
+  border-radius: 8px;
+}
+
+.debugGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 10px;
+  margin: 15px 0;
+}
+
+.iframeDebug {
+  background: #fff3e0;
+  padding: 15px;
+  border-radius: 6px;
+  margin-top: 15px;
+  border-left: 4px solid #ff9800;
+}
+
+.testSection {
+  border: 1px solid #ddd;
+  padding: 20px;
+  margin: 20px 0;
+  border-radius: 8px;
+  background: #fafafa;
+}
+
+.testSection h2 {
+  margin-top: 0;
+  color: #333;
+  border-bottom: 2px solid #eee;
+  padding-bottom: 10px;
+}
+
+.button {
+  background: #007bff;
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  margin: 5px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: background 0.3s;
+
+  &:hover {
+    background: #0056b3;
+  }
+
+  &.danger {
+    background: #dc3545;
+
+    &:hover {
+      background: #c82333;
+    }
+  }
+}
+
+.cookieButtons,
+.scriptButtons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+}
+
+.input {
+  padding: 8px;
+  margin: 5px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  width: 200px;
+}
+
+.results {
+  background: #f8f9fa;
+  padding: 15px;
+  border-radius: 4px;
+  white-space: pre-wrap;
+  font-family: "Courier New", monospace;
+  max-height: 400px;
+  overflow-y: auto;
+  border: 1px solid #dee2e6;
+}
+
+.storageInfo,
+.cookiesInfo {
+  background: white;
+  padding: 15px;
+  border-radius: 4px;
+  margin: 10px 0;
+  border: 1px solid #e9ecef;
+}
+
+.cookiesInfo pre {
+  background: #f8f9fa;
+  padding: 10px;
+  border-radius: 4px;
+  overflow-x: auto;
+}
+
+.form div {
+  margin: 15px 0;
+}
+
+.label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+
+@media (max-width: 768px) {
+  .debugGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .cookieButtons,
+  .scriptButtons {
+    flex-direction: column;
+  }
+
+  .button {
+    width: 100%;
+    margin: 2px 0;
+  }
+}

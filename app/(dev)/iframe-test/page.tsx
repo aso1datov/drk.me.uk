@@ -417,7 +417,7 @@ function IframeTest() {
         return;
       }
 
-      await doc.requestStorageAccess();
+      await document.requestStorageAccess();
       setScriptResult(
         "Storage Access API: requestStorageAccess успешно, попробуйте ещё раз операции с cookies/localStorage"
       );

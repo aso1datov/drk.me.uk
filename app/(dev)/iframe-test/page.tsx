@@ -11,18 +11,154 @@ import {
 
 import styles from "./page.module.scss";
 
+const MAX_MESSAGE_LOG_LENGTH = 20;
+
+const getErrorMessage = (error: unknown) =>
+  error instanceof Error ? error.message : String(error);
+
+type StorageProbeResult = {
+  keys: string[];
+  writable: boolean;
+  error: string;
+};
+
+type DebugInfoState = {
+  timestamp: string;
+  domain: string;
+  origin: string;
+  userAgent: string;
+  platform: string;
+  screen: string;
+  viewport: string;
+  inIframe: boolean;
+  parentDomain: string;
+  localStorageProbe: StorageProbeResult;
+  sessionStorageProbe: StorageProbeResult;
+  cookieEnabled: boolean;
+  javaEnabled: boolean | string;
+  language: string;
+  languages: readonly string[];
+  visibility: DocumentVisibilityState;
+  sandboxFlags: string;
+  permissionsPolicy: string[];
+};
+
+type IframeInfoState = {
+  isInIframe: boolean;
+  iframeSize: string;
+  referrer: string;
+  canAccessParent: string;
+};
+
+const initialStorageProbe: StorageProbeResult = {
+  keys: [],
+  writable: false,
+  error: "unknown",
+};
+
+const initialDebugInfo: DebugInfoState = {
+  timestamp: "",
+  domain: "",
+  origin: "",
+  userAgent: "",
+  platform: "",
+  screen: "",
+  viewport: "",
+  inIframe: false,
+  parentDomain: "none",
+  localStorageProbe: initialStorageProbe,
+  sessionStorageProbe: initialStorageProbe,
+  cookieEnabled: false,
+  javaEnabled: false,
+  language: "",
+  languages: [],
+  visibility: "visible",
+  sandboxFlags: "unknown",
+  permissionsPolicy: [],
+};
+
+const initialIframeInfo: IframeInfoState = {
+  isInIframe: false,
+  iframeSize: "",
+  referrer: "n/a",
+  canAccessParent: "n/a",
+};
+
 function IframeTest() {
   const [localStorageValue, setLocalStorageValue] = useState("");
   const [sessionStorageValue, setSessionStorageValue] = useState("");
   const [cookieValues, setCookieValues] = useState({});
   const [scriptResult, setScriptResult] = useState("");
   const [formData, setFormData] = useState({ name: "", email: "" });
-  const [debugInfo, setDebugInfo] = useState({});
-  const [iframeInfo, setIframeInfo] = useState({});
+  const [debugInfo, setDebugInfo] = useState<DebugInfoState>(initialDebugInfo);
+  const [iframeInfo, setIframeInfo] =
+    useState<IframeInfoState>(initialIframeInfo);
+  const [postMessageLog, setPostMessageLog] = useState<string[]>([]);
 
   // Сбор отладочной информации
 
   const updateDebugInfo = useCallback(() => {
+    const safeAccess = <T,>(fallback: T, cb: () => T) => {
+      try {
+        return cb();
+      } catch {
+        return fallback;
+      }
+    };
+
+    const probeStorage = (storage?: Storage) =>
+      safeAccess(
+        {
+          keys: [] as string[],
+          writable: false,
+          error: "n/a",
+        },
+        () => {
+          if (!storage) {
+            return {
+              keys: [],
+              writable: false,
+              error: "Storage undefined",
+            };
+          }
+
+          const tempKey = "__iframe_probe__";
+          try {
+            storage.setItem(tempKey, "1");
+            storage.removeItem(tempKey);
+            return {
+              keys: Object.keys(storage),
+              writable: true,
+              error: "none",
+            };
+          } catch (error) {
+            return {
+              keys: Object.keys(storage),
+              writable: false,
+              error: getErrorMessage(error),
+            };
+          }
+        }
+      );
+
+    const sandboxFlags = safeAccess<string>("unavailable", () => {
+      const frameElement = window.frameElement as HTMLIFrameElement | null;
+      if (frameElement?.sandbox) {
+        return Array.from(frameElement.sandbox).join(", ") || "empty";
+      }
+      return "none";
+    });
+
+    const permissionsPolicy = safeAccess<string[]>([], () => {
+      const docWithPolicy = document as Document & {
+        featurePolicy?: { allowedFeatures: () => string[] };
+        permissionsPolicy?: { allowedFeatures: () => string[] };
+      };
+      const policy =
+        docWithPolicy.featurePolicy || docWithPolicy.permissionsPolicy;
+      return policy?.allowedFeatures ? policy.allowedFeatures() : [];
+    });
+
     const info = {
       timestamp: new Date().toISOString(),
       domain: window.location.hostname,
@@ -33,12 +169,15 @@ function IframeTest() {
       viewport: `${window.innerWidth}x${window.innerHeight}`,
       inIframe: window.self !== window.top,
       parentDomain: window.self !== window.top ? document.referrer : "none",
-      localStorageKeys: Object.keys(localStorage),
-      sessionStorageKeys: Object.keys(sessionStorage),
+      localStorageProbe: probeStorage(window.localStorage),
+      sessionStorageProbe: probeStorage(window.sessionStorage),
       cookieEnabled: navigator.cookieEnabled,
       javaEnabled: navigator.javaEnabled ? navigator.javaEnabled() : false,
       language: navigator.language,
       languages: navigator.languages,
+      visibility: document.visibilityState,
+      sandboxFlags,
+      permissionsPolicy,
     };
     setDebugInfo(info);
 
@@ -47,8 +186,17 @@ function IframeTest() {
       setIframeInfo({
         isInIframe: true,
         iframeSize: `${window.innerWidth}x${window.innerHeight}`,
-        referrer: document.referrer,
-        canAccessParent: typeof window.parent !== "undefined",
+        referrer: document.referrer || "unknown",
+        canAccessParent: safeAccess("blocked", () =>
+          window.parent && window.parent !== window ? "maybe" : "self"
+        ),
+      });
+    } else {
+      setIframeInfo({
+        isInIframe: false,
+        iframeSize: `${window.innerWidth}x${window.innerHeight}`,
+        referrer: "n/a",
+        canAccessParent: "n/a",
       });
     }
   }, []);
@@ -77,23 +225,41 @@ function IframeTest() {
   }, []);
 
   const handleLocalStorageSave = () => {
-    const value = `Test-${Date.now()}`;
-    localStorage.setItem("iframeTest", value);
-    setLocalStorageValue(value);
-    updateDebugInfo();
+    try {
+      const value = `Test-${Date.now()}`;
+      localStorage.setItem("iframeTest", value);
+      setLocalStorageValue(value);
+      setScriptResult(`LocalStorage сохранен: ${value}`);
+    } catch (error) {
+      setScriptResult(`LocalStorage недоступен: ${getErrorMessage(error)}`);
+    } finally {
+      updateDebugInfo();
+    }
   };
 
   const handleLocalStorageClear = () => {
-    localStorage.removeItem("iframeTest");
-    setLocalStorageValue("");
-    updateDebugInfo();
+    try {
+      localStorage.removeItem("iframeTest");
+      setLocalStorageValue("");
+      setScriptResult("LocalStorage очищен");
+    } catch (error) {
+      setScriptResult(`LocalStorage недоступен: ${getErrorMessage(error)}`);
+    } finally {
+      updateDebugInfo();
+    }
   };
 
   const handleSessionStorageSave = () => {
-    const value = `Session-${Date.now()}`;
-    sessionStorage.setItem("iframeSessionTest", value);
-    setSessionStorageValue(value);
-    updateDebugInfo();
+    try {
+      const value = `Session-${Date.now()}`;
+      sessionStorage.setItem("iframeSessionTest", value);
+      setSessionStorageValue(value);
+      setScriptResult(`SessionStorage сохранен: ${value}`);
+    } catch (error) {
+      setScriptResult(`SessionStorage недоступен: ${getErrorMessage(error)}`);
+    } finally {
+      updateDebugInfo();
+    }
   };
 
   // Тест Cookies с различными настройками
@@ -129,19 +295,27 @@ function IframeTest() {
         cookieString = `iframeTestDefault=${baseValue}; path=/; max-age=3600`;
     }
 
-    document.cookie = cookieString;
-    setScriptResult(`Установлена кука: ${cookieString}`);
-    setTimeout(updateCookieInfo, 100);
+    try {
+      document.cookie = cookieString;
+      setScriptResult(`Установлена кука: ${cookieString}`);
+      setTimeout(updateCookieInfo, 100);
+    } catch (error) {
+      setScriptResult(`Cookie ошибка: ${getErrorMessage(error)}`);
+    }
   };
 
   const deleteAllCookies = () => {
-    const cookies = document.cookie.split(";");
-    cookies.forEach((cookie) => {
-      const name = cookie.split("=")[0].trim();
-      document.cookie = `${name}=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/`;
-    });
-    setScriptResult("Все куки удалены");
-    setTimeout(updateCookieInfo, 100);
+    try {
+      const cookies = document.cookie.split(";");
+      cookies.forEach((cookie) => {
+        const name = cookie.split("=")[0].trim();
+        document.cookie = `${name}=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/`;
+      });
+      setScriptResult("Все куки удалены");
+      setTimeout(updateCookieInfo, 100);
+    } catch (error) {
+      setScriptResult(`Не удалось очистить куки: ${getErrorMessage(error)}`);
+    }
   };
 
   // Тест выполнения скриптов
@@ -203,7 +377,7 @@ function IframeTest() {
         (error) => {
           setScriptResult(`Ошибка геолокации: ${error.message}`);
         },
-        { timeout: 5000 },
+        { timeout: 5000 }
       );
     } else {
       setScriptResult("Геолокация не поддерживается");
@@ -212,6 +386,7 @@ function IframeTest() {
 
   // Тест запросов
   const testFetch = async (url = "https://httpbin.org/get") => {
+    console.log(url);
     try {
       const response = await fetch(url);
       const data = await response.json();
@@ -221,18 +396,67 @@ function IframeTest() {
     }
   };
 
+  // Safari Storage Access API (requestStorageAccess)
+  const requestStorageAccess = async () => {
+    console.log(document.hasStorageAccess, document.requestStorageAccess);
+
+    if (!document.hasStorageAccess || !document.requestStorageAccess) {
+      setScriptResult(
+        "Storage Access API не поддерживается в этом браузере / контексте"
+      );
+      return;
+    }
+
+    try {
+      const hasAccess = await document.hasStorageAccess();
+
+      if (hasAccess) {
+        setScriptResult(
+          "Storage Access API: доступ уже есть (hasStorageAccess = true)"
+        );
+        return;
+      }
+
+      await doc.requestStorageAccess();
+      setScriptResult(
+        "Storage Access API: requestStorageAccess успешно, попробуйте ещё раз операции с cookies/localStorage"
+      );
+    } catch (error) {
+      setScriptResult(
+        `Storage Access API: ошибка при запросе доступа: ${getErrorMessage(
+          error
+        )}`
+      );
+    } finally {
+      // Обновим диагностику и куки после вызова
+      updateDebugInfo();
+      updateCookieInfo();
+    }
+  };
+
   // Тест postMessage
   const testPostMessage = () => {
     if (window.self !== window.top) {
-      window.parent.postMessage(
-        {
+      try {
+        const message = {
           type: "TEST_MESSAGE",
           data: `Hello from iframe at ${new Date().toISOString()}`,
           origin: window.location.origin,
-        },
-        "*",
-      );
-      setScriptResult("Сообщение отправлено в родительское окно");
+        };
+        window.parent.postMessage(message, "*");
+        setScriptResult("Сообщение отправлено в родительское окно");
+        setPostMessageLog((prev) => {
+          const next = [
+            `${new Date().toLocaleTimeString()} → parent: ${JSON.stringify(
+              message
+            )}`,
+            ...prev,
+          ];
+          return next.slice(0, MAX_MESSAGE_LOG_LENGTH);
+        });
+      } catch (error) {
+        setScriptResult(`postMessage ошибка: ${getErrorMessage(error)}`);
+      }
     } else {
       setScriptResult("Не в iframe - сообщение не отправлено");
     }
@@ -240,13 +464,24 @@ function IframeTest() {
 
   // Тест производительности
   const testPerformance = () => {
+    const perfWithMemory = performance as Performance & {
+      memory?: { usedJSHeapSize: number };
+    };
+    const memoryInfo = perfWithMemory.memory
+      ? `Used: ${Math.round(perfWithMemory.memory.usedJSHeapSize / 1048576)}MB`
+      : "N/A";
     const perf = `
       Performance API:
       Navigation: ${performance.navigation.type}
       Timing: 
-        Load: ${performance.timing.loadEventEnd - performance.timing.navigationStart}ms
-        DOM Content Loaded: ${performance.timing.domContentLoadedEventEnd - performance.timing.navigationStart}ms
-      Memory: ${performance.memory ? `Used: ${Math.round(performance.memory.usedJSHeapSize / 1048576)}MB` : "N/A"}
+        Load: ${
+          performance.timing.loadEventEnd - performance.timing.navigationStart
+        }ms
+        DOM Content Loaded: ${
+          performance.timing.domContentLoadedEventEnd -
+          performance.timing.navigationStart
+        }ms
+      Memory: ${memoryInfo}
     `;
     setScriptResult(perf);
   };
@@ -257,11 +492,37 @@ function IframeTest() {
 
     // Слушатель изменений в хранилищах
     window.addEventListener("storage", updateDebugInfo);
+    window.addEventListener("resize", updateDebugInfo);
+    document.addEventListener("visibilitychange", updateDebugInfo);
 
     return () => {
       window.removeEventListener("storage", updateDebugInfo);
+      window.removeEventListener("resize", updateDebugInfo);
+      document.removeEventListener("visibilitychange", updateDebugInfo);
     };
   }, [updateDebugInfo, updateCookieInfo]);
+
+  useEffect(() => {
+    const handleMessage = (event: MessageEvent) => {
+      setPostMessageLog((prev) => {
+        const entry = `${new Date().toLocaleTimeString()} ← ${
+          event.origin
+        }: ${JSON.stringify(event.data)}`;
+        const next = [entry, ...prev];
+        return next.slice(0, MAX_MESSAGE_LOG_LENGTH);
+      });
+    };
+
+    window.addEventListener("message", handleMessage);
+
+    return () => {
+      window.removeEventListener("message", handleMessage);
+    };
+  }, []);
+
+  const clearPostMessageLog = () => {
+    setPostMessageLog([]);
+  };
 
   return (
     <section className={styles.container}>
@@ -289,6 +550,48 @@ function IframeTest() {
             <strong>Cookies enabled:</strong>{" "}
             {debugInfo.cookieEnabled ? "✅ Да" : "❌ Нет"}
           </div>
+          <div>
+            <strong>Visibility:</strong> {debugInfo.visibility}
+          </div>
+          <div>
+            <strong>Sandbox:</strong> {debugInfo.sandboxFlags}
+          </div>
+        </div>
+
+        <div className={styles.storageProbe}>
+          <h3>📦 Проверка хранилищ</h3>
+          <p>
+            <strong>LocalStorage:</strong>{" "}
+            {debugInfo.localStorageProbe?.writable
+              ? "✅ доступно"
+              : "❌ блокировано"}{" "}
+            ({debugInfo.localStorageProbe?.error})
+          </p>
+          <p>
+            <strong>Ключи:</strong>{" "}
+            {debugInfo.localStorageProbe?.keys?.join(", ") || "нет"}
+          </p>
+          <p>
+            <strong>SessionStorage:</strong>{" "}
+            {debugInfo.sessionStorageProbe?.writable
+              ? "✅ доступно"
+              : "❌ блокировано"}{" "}
+            ({debugInfo.sessionStorageProbe?.error})
+          </p>
+          <p>
+            <strong>Ключи:</strong>{" "}
+            {debugInfo.sessionStorageProbe?.keys?.join(", ") || "нет"}
+          </p>
+          {debugInfo.permissionsPolicy?.length ? (
+            <p>
+              <strong>Permissions Policy:</strong>{" "}
+              {debugInfo.permissionsPolicy.join(", ")}
+            </p>
+          ) : (
+            <p>
+              <strong>Permissions Policy:</strong> неизвестно
+            </p>
+          )}
         </div>
 
         {iframeInfo.isInIframe && (
@@ -320,7 +623,7 @@ function IframeTest() {
           </p>
           <p>
             <strong>Все ключи LocalStorage:</strong>{" "}
-            {debugInfo.localStorageKeys?.join(", ") || "нет"}
+            {debugInfo.localStorageProbe?.keys?.join(", ") || "нет"}
           </p>
         </div>
         <button
@@ -406,12 +709,35 @@ function IframeTest() {
           </button>
           <button
             type="button"
+            className={styles.button}
+            onClick={requestStorageAccess}
+          >
+            Запросить Storage Access (Safari)
+          </button>
+          <button
+            type="button"
             className={cc([styles.button, styles.danger])}
             onClick={deleteAllCookies}
           >
             Удалить все куки
           </button>
         </div>
+      </div>
+
+      <div className={styles.testSection}>
+        <h2>🔁 Мониторинг postMessage</h2>
+        <button
+          type="button"
+          className={cc([styles.button, styles.secondary])}
+          onClick={clearPostMessageLog}
+        >
+          Очистить лог
+        </button>
+        <pre className={styles.logWindow}>
+          {postMessageLog.length
+            ? postMessageLog.join("\n")
+            : "Сообщений пока нет. Отправьте postMessage или дождитесь ответа родителя."}
+        </pre>
       </div>
 
       <div className={styles.testSection}>
@@ -474,7 +800,7 @@ function IframeTest() {
           <button
             type="button"
             className={styles.button}
-            onClick={() => testFetch(window.location.origin)}
+            onClick={() => testFetch(`${window.location.origin}/api/hello`)}
           >
             Тест Fetch (same-origin)
           </button>

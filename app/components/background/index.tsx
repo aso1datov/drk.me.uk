@@ -47,7 +47,7 @@ const Background = memo<Props>(({ className }) => {
         75,
         container.clientWidth / container.clientHeight,
         0.1,
-        2000,
+        2000
       );
     }
 
@@ -109,6 +109,7 @@ const Background = memo<Props>(({ className }) => {
       sceneRef.current.scale.set(1.5, 1.5, 1.5);
 
       const mesh = gltf.scene.children[0] as Mesh;
+      // biome-ignore lint/style/noNonNullAssertion: material created above
       mesh.material = materialRef.current!;
 
       animate(mesh);

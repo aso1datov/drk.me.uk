@@ -28,7 +28,7 @@ export function proxy(request: NextRequest) {
     object-src 'none';
     base-uri 'self';
     form-action 'self';
-    frame-ancestors 'self';
+    frame-ancestors 'self' https://feat-check-iframe.web-test.alfabank.ru/;
     upgrade-insecure-requests;
 `;
 
@@ -38,6 +38,6 @@ export function proxy(request: NextRequest) {
 
   requestHeaders.set(
     "Content-Security-Policy",
-    contentSecurityPolicyHeaderValue,
+    contentSecurityPolicyHeaderValue
   );
 }

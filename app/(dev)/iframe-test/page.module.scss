@@ -70,6 +70,14 @@
   }
 }
 
+.button.secondary {
+  background: #6c757d;
+
+  &:hover {
+    background: #545b62;
+  }
+}
+
 .cookieButtons,
 .scriptButtons {
   display: flex;
@@ -110,6 +118,28 @@
   padding: 10px;
   border-radius: 4px;
   overflow-x: auto;
+}
+
+.storageProbe {
+  background: #fff;
+  padding: 15px;
+  border-radius: 4px;
+  border: 1px dashed #90caf9;
+  margin-top: 15px;
+  font-size: 14px;
+}
+
+.logWindow {
+  margin-top: 10px;
+  background: #0d1117;
+  color: #f8f9fa;
+  padding: 15px;
+  border-radius: 6px;
+  font-family: "Courier New", monospace;
+  white-space: pre-wrap;
+  max-height: 200px;
+  overflow-y: auto;
+  border: 1px solid #1f2933;
 }
 
 .form div {
